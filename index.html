@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Toca do Design | Adesivos & Balões</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Fredoka -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Swiper.js CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-yellow': '#FFD52A',    /* Cor do Texto - Amarelo Oficial */
+                        'brand-lightblue': '#64B3DE', /* Cor de Contorno 1 */
+                        'brand-blue': '#015D8C',      /* Cor de Contorno 2 e Subtexto */
+                        'brand-dark': '#0B2545',      /* Azul escuro complementar */
+                        'brand-bg': '#F4F9FD',        /* Fundo limpo e iluminado */
+                    },
+                    fontFamily: {
+                        sans: ['Fredoka', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'sticker': '0 10px 25px -5px rgba(1, 93, 140, 0.15)',
+                        'glow': '0 0 20px rgba(255, 213, 42, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background-color: #FAFCFF;
+            color: #0B2545;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            /* Garante que a âncora não fique escondida pelo header fixo */
+            scroll-padding-top: 90px;
+        }
+
+        /* 3D Glossy Balloon Background Canvas */
+        #balloon-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            background: linear-gradient(135deg, #FAFCFF 0%, #EFF6FC 100%);
+        }
+
+        /* Nav Sidebar Animation */
+        #nav-sidebar {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateX(-100%);
+        }
+
+        #nav-sidebar.open {
+            transform: translateX(0);
+        }
+
+        /* Cart Sidebar Animation */
+        #cart-sidebar {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateX(100%);
+        }
+
+        #cart-sidebar.open {
+            transform: translateX(0);
+        }
+
+        /* Toast Notification */
+        .toast {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* === SWIPER 3D COVERFLOW === */
+        .swiper-premium {
+            padding: 40px 20px 60px !important;
+        }
+
+        .swiper-premium .swiper-slide {
+            width: 300px !important;
+            transition: transform 0.5s ease, filter 0.5s ease;
+            filter: brightness(0.75) saturate(0.7);
+            border-radius: 24px;
+            cursor: pointer;
+        }
+
+        .swiper-premium .swiper-slide-active {
+            filter: brightness(1) saturate(1);
+        }
+
+        @media(min-width: 768px) {
+            .swiper-premium .swiper-slide {
+                width: 360px !important;
+            }
+        }
+
+        /* Neon glow on active slide (Padrão Azul) */
+        .swiper-premium .swiper-slide-active .premium-card-inner {
+            box-shadow: 0 0 30px 6px rgba(100, 179, 222, 0.35), 0 20px 60px rgba(1, 93, 140, 0.25);
+            transform: translateY(-10px);
+            border-color: rgba(100, 179, 222, 0.6);
+        }
+
+        .premium-card-inner {
+            transition: box-shadow 0.5s ease, transform 0.5s ease, border-color 0.5s ease;
+            height: 100%;
+        }
+
+        /* Corporate neon */
+        .swiper-corporativo .swiper-slide-active .premium-card-inner {
+            box-shadow: 0 0 30px 6px rgba(11, 37, 69, 0.5), 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-color: rgba(11, 37, 69, 0.4);
+        }
+
+        .swiper-pagination-bullet {
+            background: #015D8C !important;
+            opacity: 0.3;
+            width: 8px;
+            height: 8px;
+        }
+
+        .swiper-pagination-bullet-active {
+            opacity: 1 !important;
+            background: #FFD52A !important;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* === FOOTER ALTO LUXO === */
+        #footer-luxo {
+            background: linear-gradient(160deg, #060e1c 0%, #0B2545 60%, #091526 100%);
+            border-top: 1px solid rgba(255, 213, 42, 0.2);
+        }
+
+        #footer-luxo .footer-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 213, 42, 0.3), transparent);
+            margin: 32px 0;
+        }
+
+        #footer-luxo .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        #footer-luxo .social-icon:hover {
+            border-color: #FFD52A;
+            color: #FFD52A;
+            box-shadow: 0 0 12px rgba(255, 213, 42, 0.2);
+        }
+    </style>
+</head>
+
+<body class="antialiased relative min-h-screen flex flex-col">
+
+    <!-- SEÇÃO: CANVAS DE FUNDO (BALÕES ANIMADOS) -->
+    <canvas id="balloon-canvas"></canvas>
+
+    <!-- SEÇÃO: CABEÇALHO / HEADER -->
+    <header
+        class="bg-white/90 backdrop-blur-md border-b-2 border-brand-lightblue/30 sticky top-0 z-40 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+
+                <!-- Menu Toggle (Mobile) -->
+                <button id="nav-toggle" class="text-2xl text-brand-blue hover:text-brand-yellow transition p-2">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Logo no Header -->
+                <div class="flex items-center gap-3">
+                    <img src="img/logo.png"
+                        onerror="this.src='https://placehold.co/200x80/ffffff/015D8C?text=Toca+do+Design'"
+                        alt="Toca do Design Logo" class="h-10 md:h-12 object-contain">
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex gap-8 items-center text-sm font-bold tracking-wider uppercase">
+                    <a href="#inicio"
+                        class="text-brand-blue hover:text-brand-yellow transition pb-1 border-b-2 border-brand-yellow">Início</a>
+                    <a href="#apresentacao" class="text-brand-dark hover:text-brand-blue transition">Apresentação</a>
+                    <a href="#secao-arcos" class="text-brand-dark hover:text-brand-blue transition">Projetos</a>
+                    <a href="#secao-helio" class="text-brand-dark hover:text-brand-blue transition">Catálogo</a>
+                </nav>
+
+                <!-- Cart Button -->
+                <button id="cart-toggle"
+                    class="relative w-12 h-12 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue hover:scale-105 transition flex items-center justify-center shadow-md">
+                    <i class="fas fa-shopping-bag text-lg"></i>
+                    <span id="cart-badge"
+                        class="absolute -top-1 -right-1 bg-brand-blue text-brand-yellow text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center border-2 border-white shadow-md hidden">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SEÇÃO: CONTEÚDO PRINCIPAL (MAIN) -->
+    <main class="flex-grow z-10">
+
+        <!-- SEÇÃO: HERO (INÍCIO DA PÁGINA) -->
+        <section id="inicio"
+            class="container mx-auto px-4 py-12 md:py-20 flex flex-col items-center justify-center text-center">
+            <span
+                class="bg-brand-yellow/30 border-2 border-brand-yellow text-brand-blue tracking-wider uppercase text-xs px-5 py-2 rounded-full mb-8 font-bold shadow-sm">
+                <i class="fas fa-star text-brand-yellow mr-1"></i> Balões para todas as ocasiões
+            </span>
+
+            <img src="img/logo.png"
+                onerror="this.src='https://placehold.co/400x150/ffffff/015D8C?text=Logo+Toca+do+Design'"
+                alt="Logo Toca do Design"
+                class="w-72 sm:w-96 md:w-[450px] mb-8 drop-shadow-2xl hover:scale-[1.02] transition-transform duration-500">
+
+            <div class="max-w-2xl mb-10">
+                <!-- Frase em destaque -->
+                <h2 class="text-xl sm:text-2xl md:text-3xl text-brand-blue font-extrabold mb-3 leading-tight">
+                    Somos especialistas em eternizar momentos!
+                </h2>
+
+                <!-- Restante do texto -->
+                <p class="text-sm sm:text-base text-brand-dark/80 font-medium leading-relaxed">
+                    Na Toca do Design, cada detalhe é pensado para transform ideias em experiências especiais.
+                    Oferecemos balões e soluções personalizadas para presentear, celebrar, valorizar marcas e criar
+                    projetos para
+                    lojas, empresas e grandes corporações. Do detalhe que surpreende às grandes produções, unimos
+                    criatividade, personalização e cuidado em cada entrega.
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
+                <a href="#secao-personalizados"
+                    class="bg-brand-yellow hover:bg-amber-400 text-brand-blue font-bold text-sm tracking-wider uppercase py-4 px-9 rounded-full transition duration-300 shadow-lg border-2 border-white flex items-center justify-center gap-2">
+                    Explorar Coleções <i class="fas fa-arrow-down text-brand-blue animate-bounce"></i>
+                </a>
+                <a href="https://wa.me/5541998704374" target="_blank"
+                    class="bg-white/80 backdrop-blur-sm border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-brand-yellow font-bold text-sm tracking-wider uppercase py-4 px-9 rounded-full transition duration-300 flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fab fa-whatsapp text-lg"></i> Orçamento
+                </a>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: APRESENTAÇÃO DA MARCA E VALORES -->
+        <section id="apresentacao" class="bg-white/80 backdrop-blur-md py-16 border-y-2 border-brand-lightblue/30 my-8">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="text-center mb-12">
+                    <span class="text-xs text-brand-lightblue uppercase tracking-widest font-bold block mb-2">Essência &
+                        Criatividade</span>
+                    <h3 class="text-3xl md:text-4xl text-brand-blue font-bold">O Que Nos Move</h3>
+                    <div class="w-20 h-1 bg-brand-yellow mx-auto mt-4 rounded-full"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div
+                        class="bg-brand-bg p-8 rounded-3xl border-2 border-brand-lightblue/40 text-center shadow-sm hover:shadow-md transition">
+                        <div
+                            class="w-16 h-16 rounded-full bg-brand-yellow text-brand-blue border-2 border-brand-blue flex items-center justify-center text-2xl mx-auto mb-6 shadow-md">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-brand-blue mb-3">Criatividade & Personalização</h4>
+                        <p class="text-sm text-brand-dark/80 leading-relaxed font-medium">Transformamos ideias em
+                            produtos e composições personalizadas que expressam identidades e tornam cada ocasião
+                            especial.</p>
+                    </div>
+                    <div
+                        class="bg-brand-bg p-8 rounded-3xl border-2 border-brand-lightblue/40 text-center shadow-sm hover:shadow-md transition">
+                        <div
+                            class="w-16 h-16 rounded-full bg-brand-lightblue text-brand-yellow border-2 border-brand-yellow flex items-center justify-center text-2xl mx-auto mb-6 shadow-md">
+                            <i class="fas fa-feather-alt"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-brand-blue mb-3">Soluções para Cada Necessidade</h4>
+                        <p class="text-sm text-brand-dark/80 leading-relaxed font-medium">Do balão para presentear a
+                            projetos para lojas, marcas, eventos e grandes corporações, criamos soluções para diferentes
+                            momentos e objetivos.</p>
+                    </div>
+                    <div
+                        class="bg-brand-bg p-8 rounded-3xl border-2 border-brand-lightblue/40 text-center shadow-sm hover:shadow-md transition">
+                        <div
+                            class="w-16 h-16 rounded-full bg-brand-blue text-brand-yellow border-2 border-brand-lightblue flex items-center justify-center text-2xl mx-auto mb-6 shadow-md">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-brand-blue mb-3">Qualidade & Cuidado em Cada Detalhe</h4>
+                        <p class="text-sm text-brand-dark/80 leading-relaxed font-medium">Valorizamos a personalização,
+                            a qualidade dos materiais e o acabamento para proporcionar uma experiência cuidadosa em cada
+                            etapa.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: PROJETO DESTAQUE SOB MEDIDA -->
+        <section id="secao-destaque" class="py-8 md:py-12 container mx-auto px-4 md:px-6">
+            <div class="bg-brand-blue rounded-[24px] md:rounded-[32px] p-5 md:p-12 border-[4px] md:border-[6px] border-brand-lightblue/50 shadow-2xl relative text-white flex flex-col lg:flex-row items-center gap-7 md:gap-10 group"
+                onclick="openCustomRequestModal()">
+                <div
+                    class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-brand-lightblue/20 blur-2xl pointer-events-none">
+                </div>
+                <div
+                    class="absolute -left-20 -top-20 w-60 h-60 rounded-full bg-brand-yellow/15 blur-2xl pointer-events-none">
+                </div>
+
+                <div class="w-full lg:w-1/2 z-10 flex flex-col items-start text-left">
+                    <span
+                        class="bg-brand-yellow text-brand-blue uppercase font-bold text-xs px-3.5 py-1.5 rounded-full mb-4 shadow-md tracking-wider flex items-center gap-1.5">
+                        <i class="fas fa-crown text-brand-blue"></i> Especialistas em Balões
+                    </span>
+                    <h3
+                        class="text-2xl sm:text-3xl md:text-5xl font-extrabold mb-4 md:mb-6 leading-tight text-white drop-shadow-sm">
+                        Balões que transformam momentos em <span class="text-brand-yellow">memórias.</span>
+                    </h3>
+                    <p class="text-white/90 text-sm sm:text-base mb-6 leading-relaxed font-medium">
+                        Oferecemos balões personalizados, buquês com gás hélio e soluções criativas para presentes,
+                        celebrações, ações promocionais e projetos corporativos. Atendemos clientes individuais, lojas e
+                        empresas, com opções que valorizam cada ocasião e fortalecem marcas
+                    </p>
+                    <div class="flex flex-wrap gap-3 mb-6">
+                        <span
+                            class="bg-white/10 border border-brand-lightblue/40 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-2"><i
+                                class="fas fa-check text-brand-yellow"></i> Balões Personalizados</span>
+                        <span
+                            class="bg-white/10 border border-brand-lightblue/40 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-2"><i
+                                class="fas fa-check text-brand-yellow"></i> Festas e celebrações</span>
+                        <span
+                            class="bg-white/10 border border-brand-lightblue/40 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-2"><i
+                                class="fas fa-check text-brand-yellow"></i> Soluções corporativas</span>
+                    </div>
+                    <button
+                        class="bg-brand-yellow hover:bg-amber-400 text-brand-blue font-bold text-sm tracking-widest uppercase py-3.5 px-8 rounded-full transition duration-300 shadow-lg border-2 border-white flex items-center gap-3">
+                        <i class="fas fa-magic"></i> Conheça nossas soluções
+                    </button>
+                </div>
+                <div class="w-full lg:w-1/2 z-10">
+                    <div
+                        class="relative rounded-2xl overflow-hidden border-4 border-brand-lightblue shadow-2xl aspect-[10/10] bg-brand-bg">
+                        <img src="img/destaque.jpeg"
+                            onerror="this.src='https://placehold.co/1200x800/015D8C/FFD52A?text=Projeto+Personalizado+Destaque'"
+                            alt="Projeto em Destaque"
+                            class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div
+                            class="absolute bottom-0 left-0 w-full bg-brand-blue/95 backdrop-blur-sm p-2.5 md:p-4 flex flex-col border-t-2 border-brand-lightblue/30">
+                            <div class="flex items-center gap-1.5 md:gap-2 mb-0.5 md:mb-1">
+                                <i class="fas fa-crown text-brand-yellow text-[10px] md:text-sm"></i>
+                                <span
+                                    class="text-brand-yellow text-[10px] md:text-xs font-extrabold uppercase tracking-widest">Destaque
+                                    Toca do Design</span>
+                            </div>
+                            <p class="text-white text-[10px] md:text-sm font-medium leading-tight md:leading-normal">
+                                Personalização, criatividade e cuidado em cada detalhe.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: COLEÇÃO 01 - BALÕES PERSONALIZADOS -->
+        <section id="secao-personalizados" class="py-12">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+                <div class="mb-8 flex flex-col items-center text-center gap-2">
+                    <h3 class="text-2xl md:text-3xl text-brand-blue font-bold tracking-tight">Balões Personalizados</h3>
+                    <span
+                        class="text-xs text-brand-blue font-bold uppercase tracking-widest flex items-center gap-2 mb-1"><i
+                            class="fas fa-magic text-brand-yellow"></i> Coleção 01</span>
+                </div>
+
+                <!-- Layout centralizado com flex-wrap para ajustar perfeitamente -->
+                <div id="grid-personalizados" class="flex flex-wrap justify-center gap-3 sm:gap-4 pt-2"></div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: COLEÇÃO 02 - GÁS HÉLIO -->
+        <section id="secao-helio" class="py-12 bg-white/60 backdrop-blur-sm border-t-2 border-brand-lightblue/20">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+                <div class="mb-8 flex flex-col items-center text-center gap-2">
+                    <h3 class="text-2xl md:text-3xl text-brand-blue font-bold tracking-tight">Balões com Gás Hélio</h3>
+                    <span
+                        class="text-xs text-brand-blue font-bold uppercase tracking-widest flex items-center gap-2 mb-1"><i
+                            class="fas fa-wind text-brand-yellow"></i> Coleção 02</span>
+                </div>
+                <!-- Layout centralizado flex-wrap para manter larguras exatas -->
+                <div id="grid-helio" class="flex flex-wrap justify-center gap-3 sm:gap-4 pt-2"></div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: COLEÇÃO 03 - DECORAÇÃO COM BALÕES -->
+        <section id="secao-romantica"
+            class="py-16 bg-white/60 backdrop-blur-sm border-t-2 border-brand-lightblue/20 overflow-hidden relative">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+                <div class="mb-10 flex flex-col items-center text-center gap-3 relative z-10">
+                    <span
+                        class="text-xs bg-brand-blue text-brand-yellow font-bold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-md flex items-center gap-2">
+                        <i class="fas fa-heart text-brand-yellow"></i> Decoração com Balões
+                    </span>
+                    <h3 class="text-4xl md:text-5xl text-brand-blue font-extrabold tracking-tight drop-shadow-sm">
+                        Decoração com Balões</h3>
+                    <p class="text-brand-dark/70 text-sm font-medium max-w-xl mt-2">Crie momentos inesquecíveis com uma
+                        decoração personalizada, combinando balões, frases, números e detalhes especiais.</p>
+                </div>
+            </div>
+            <!-- Swiper Romantica -->
+            <div class="swiper swiper-premium swiper-romantica" id="swiper-romantica">
+                <div class="swiper-wrapper" id="carousel-romantica"><!-- Injected by JS --></div>
+                <div class="swiper-pagination" id="pag-romantica"></div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: COLEÇÃO 04 - BALÕES CORPORATIVOS -->
+        <section id="secao-corporativo"
+            class="py-16 bg-gradient-to-b from-transparent to-[#060e1c]/5 border-t-2 border-brand-lightblue/20 overflow-hidden">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+                <div class="mb-10 flex flex-col items-center text-center gap-3">
+                    <span
+                        class="text-xs bg-[#0B2545] text-white font-bold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-md flex items-center gap-2">
+                        <i class="fas fa-building text-brand-yellow"></i> Projetos Corporativos
+                    </span>
+                    <h3 class="text-4xl md:text-5xl text-brand-blue font-extrabold tracking-tight drop-shadow-sm">Balões
+                        Corporativos</h3>
+                    <p class="text-brand-dark/70 text-sm font-medium max-w-xl mt-2">Estruturas profissionais de alto
+                        impacto para eventos corporativos, vitrines e lançamentos, alinhadas à sua marca.</p>
+                </div>
+            </div>
+            <!-- Swiper Corporativo -->
+            <div class="swiper swiper-premium swiper-corporativo" id="swiper-corporativo">
+                <div class="swiper-wrapper" id="carousel-corporativo"><!-- Injected by JS --></div>
+                <div class="swiper-pagination" id="pag-corporativo"></div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: COLEÇÃO 05 - ARCOS E COLUNAS -->
+        <section id="secao-arcos" class="py-16 bg-white border-t-2 border-brand-lightblue/20 overflow-hidden">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+                <div class="mb-10 flex flex-col items-center text-center gap-3">
+                    <span
+                        class="text-xs bg-brand-blue text-brand-yellow font-bold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-md flex items-center gap-2"><i
+                            class="fas fa-archway text-brand-yellow"></i> Estruturas Especiais</span>
+                    <h3 class="text-4xl md:text-5xl text-brand-blue font-extrabold tracking-tight drop-shadow-sm">Arcos
+                        & Colunas</h3>
+                    <p class="text-brand-dark/70 text-sm font-medium max-w-xl mt-2">As mais belas composições orgânicas
+                        para marcar a entrada e cenários principais do seu evento.</p>
+                </div>
+            </div>
+            <!-- Swiper Arcos -->
+            <div class="swiper swiper-premium" id="swiper-arcos">
+                <div class="swiper-wrapper" id="carousel-arcos"><!-- Injected by JS --></div>
+                <div class="swiper-pagination" id="pag-arcos"></div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: OPÇÕES DE ENTREGA -->
+        <section id="secao-entrega" class="py-16 bg-brand-bg border-t-2 border-brand-lightblue/20">
+            <div class="container mx-auto px-4 md:px-6 max-w-6xl">
+                <div class="text-center mb-12">
+                    <span class="text-xs text-brand-lightblue uppercase tracking-widest font-bold block mb-2">Logística
+                        & Atendimento</span>
+                    <h3 class="text-3xl md:text-4xl text-brand-blue font-bold mb-4">Entrega, Retirada & Montagem</h3>
+                    <p class="text-brand-dark/70 text-sm md:text-base font-medium max-w-2xl mx-auto leading-relaxed">
+                        Escolha a opção que melhor atende a sua necessidade.<br class="hidden md:block">
+                        Estamos prontos para levar mais praticidade e segurança para o seu evento ou celebração.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div
+                        class="bg-white p-6 sm:p-8 rounded-3xl border-2 border-brand-lightblue/40 text-center shadow-sm hover:shadow-md transition flex flex-col h-full">
+                        <div
+                            class="w-16 h-16 rounded-full bg-brand-yellow text-brand-blue border-2 border-brand-blue flex items-center justify-center text-2xl mx-auto mb-4 shadow-md">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-brand-blue mb-2">Montagem no Local</h4>
+                        <div class="w-8 h-1 bg-brand-yellow mx-auto rounded-full mb-4"></div>
+                        <p class="text-sm text-brand-dark/80 leading-relaxed font-medium mb-6 flex-grow">Para projetos
+                            que incluem montagem, nossa equipe realiza a instalação no endereço combinado, conforme o
+                            serviço contratado e as dimensões do projeto.</p>
+                        <div class="bg-brand-bg p-4 rounded-2xl flex items-center gap-3 text-left mt-auto">
+                            <i class="fas fa-check-circle text-brand-blue text-xl flex-shrink-0"></i>
+                            <span class="text-xs text-brand-dark font-medium leading-snug">Atendemos desde composições
+                                pequenas até grandes projetos.</span>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div
+                        class="bg-white p-6 sm:p-8 rounded-3xl border-2 border-brand-lightblue/40 text-center shadow-sm hover:shadow-md transition flex flex-col h-full">
+                        <div
+                            class="w-16 h-16 rounded-full bg-brand-lightblue text-brand-blue border-2 border-brand-blue flex items-center justify-center text-2xl mx-auto mb-4 shadow-md">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-brand-blue mb-2">Opções de Entrega</h4>
+                        <div class="w-8 h-1 bg-brand-yellow mx-auto rounded-full mb-4"></div>
+                        <p class="text-sm text-brand-dark/80 leading-relaxed font-medium mb-6 flex-grow">Você pode
+                            solicitar entrega por carro de aplicativo ou consultar a entrega realizada pela Toca do
+                            Design, mediante agendamento e disponibilidade. A taxa deve ser confirmada no atendimento.
+                        </p>
+                        <div class="bg-brand-bg p-4 rounded-2xl flex items-center gap-3 text-left mt-auto">
+                            <i class="fas fa-check-circle text-brand-blue text-xl flex-shrink-0"></i>
+                            <span class="text-xs text-brand-dark font-medium leading-snug">A entrega pela loja é
+                                realizada com agendamento prévio e conforme disponibilidade.</span>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div
+                        class="bg-white p-6 sm:p-8 rounded-3xl border-2 border-brand-lightblue/40 text-center shadow-sm hover:shadow-md transition flex flex-col h-full">
+                        <div
+                            class="w-16 h-16 rounded-full bg-brand-blue text-brand-yellow border-2 border-brand-yellow flex items-center justify-center text-2xl mx-auto mb-4 shadow-md">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-brand-blue mb-2">Retirada Agendada</h4>
+                        <div class="w-8 h-1 bg-brand-yellow mx-auto rounded-full mb-4"></div>
+                        <p class="text-sm text-brand-dark/80 leading-relaxed font-medium mb-6 flex-grow">A retirada é
+                            feita em nosso endereço, com horário previamente combinado. Consulte os horários disponíveis
+                            no momento do agendamento.</p>
+                        <div class="bg-brand-bg p-4 rounded-2xl flex items-center gap-3 text-left mt-auto">
+                            <i class="fas fa-check-circle text-brand-blue text-xl flex-shrink-0"></i>
+                            <span class="text-xs text-brand-dark font-medium leading-snug">Retirada somente com horário
+                                agendado.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: AVALIAÇÕES GOOGLE -->
+        <section id="secao-avaliacoes" class="py-16 bg-white border-t-2 border-brand-lightblue/20 overflow-hidden">
+            <div class="container mx-auto px-4 md:px-6 max-w-5xl">
+                <div class="text-center mb-12">
+                    <span class="text-xs text-brand-lightblue uppercase tracking-widest font-bold block mb-2">Google
+                        Reviews</span>
+                    <h3 class="text-3xl md:text-4xl text-brand-blue font-bold">O que dizem nossos clientes</h3>
+                    <div class="w-20 h-1 bg-brand-yellow mx-auto mt-4 rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="relative w-full mx-auto group">
+                <button onclick="scrollReviews('left')"
+                    class="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue shadow-lg flex items-center justify-center hover:scale-110 hover:bg-amber-400 transition-all z-20"
+                    aria-label="Avaliação anterior">
+                    <i class="fas fa-chevron-left ml-[-2px]"></i>
+                </button>
+                <button onclick="scrollReviews('right')"
+                    class="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue shadow-lg flex items-center justify-center hover:scale-110 hover:bg-amber-400 transition-all z-20"
+                    aria-label="Próxima avaliação">
+                    <i class="fas fa-chevron-right mr-[-2px]"></i>
+                </button>
+
+                <div id="reviews-carousel"
+                    class="flex gap-4 sm:gap-6 overflow-x-auto carousel-snap hide-scrollbar pb-6 pt-2 px-[calc(50vw-120px)] sm:px-[calc(50vw-190px)]">
+                    <div
+                        class="w-[240px] sm:w-[380px] flex-none bg-brand-bg p-6 rounded-3xl border-2 border-brand-lightblue/30 shadow-sm flex flex-col snap-center">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold text-lg">
+                                A</div>
+                            <div>
+                                <h4 class="font-bold text-sm text-brand-blue">Ana Carolina</h4>
+                                <div class="flex text-brand-yellow text-xs mt-0.5"><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i></div>
+                            </div><i class="fab fa-google text-brand-lightblue ml-auto text-xl"></i>
+                        </div>
+                        <p class="text-sm text-brand-dark/80 font-medium leading-relaxed italic">"Atendimento impecável!
+                            O arco orgânico para o aniversário da minha filha ficou maravilhoso. Fez toda a diferença na
+                            decoração."</p>
+                    </div>
+                    <div
+                        class="w-[240px] sm:w-[380px] flex-none bg-brand-bg p-6 rounded-3xl border-2 border-brand-lightblue/30 shadow-sm flex flex-col snap-center">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-lg">
+                                M</div>
+                            <div>
+                                <h4 class="font-bold text-sm text-brand-blue">Marcos Silva</h4>
+                                <div class="flex text-brand-yellow text-xs mt-0.5"><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i></div>
+                            </div><i class="fab fa-google text-brand-lightblue ml-auto text-xl"></i>
+                        </div>
+                        <p class="text-sm text-brand-dark/80 font-medium leading-relaxed italic">"Trabalho muito
+                            profissional. Encomendei balões com gás hélio e duraram a festa inteira. O adesivo
+                            personalizado ficou perfeito no painel."</p>
+                    </div>
+                    <div
+                        class="w-[240px] sm:w-[380px] flex-none bg-brand-bg p-6 rounded-3xl border-2 border-brand-lightblue/30 shadow-sm flex flex-col snap-center">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-lg">
+                                J</div>
+                            <div>
+                                <h4 class="font-bold text-sm text-brand-blue">Juliana Rocha</h4>
+                                <div class="flex text-brand-yellow text-xs mt-0.5"><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i></div>
+                            </div><i class="fab fa-google text-brand-lightblue ml-auto text-xl"></i>
+                        </div>
+                        <p class="text-sm text-brand-dark/80 font-medium leading-relaxed italic">"A melhor equipe!
+                            Cuidaram de cada detalhe da nossa vitrine corporativa. Pontuais e extremamente caprichosos.
+                            Super indico a Toca do Design."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: REDES SOCIAIS E SHOPEE -->
+        <section id="secao-redes"
+            class="py-16 bg-gradient-to-b from-transparent via-brand-lightblue/10 to-transparent border-t-2 border-brand-lightblue/30">
+            <div class="container mx-auto px-4 md:px-6 max-w-6xl">
+                <div class="text-center mb-12">
+                    <span class="text-xs text-brand-lightblue uppercase tracking-widest font-bold block mb-2">Comunidade
+                        & Lojas</span>
+                    <h3 class="text-3xl md:text-4xl text-brand-blue font-bold">Nos Siga e Compre Online</h3>
+                    <div class="w-20 h-1 bg-brand-yellow mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <!-- Destaque Shopee -->
+                <div class="max-w-4xl mx-auto mb-10">
+                    <a href="https://br.shp.ee/mhp5qrdn" target="_blank"
+                        class="block bg-[#EE4D2D] rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
+                        <div
+                            class="absolute -right-10 -top-10 w-40 h-40 bg-white/20 rounded-full blur-xl group-hover:bg-white/30 transition">
+                        </div>
+                        <div class="flex flex-col md:flex-row items-center gap-6 relative z-10">
+                            <div
+                                class="w-24 h-24 sm:w-32 sm:h-32 bg-white rounded-full flex items-center justify-center shadow-md flex-shrink-0 p-4 border-4 border-white/50">
+                                <span
+                                    class="text-[#EE4D2D] font-extrabold text-2xl sm:text-3xl text-center leading-none">Shopee</span>
+                            </div>
+                            <div class="text-center md:text-left text-white flex-grow">
+                                <span
+                                    class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-3 inline-block">Loja
+                                    Oficial</span>
+                                <h4 class="text-2xl sm:text-3xl font-bold mb-2 drop-shadow-sm">TOCA DO DESIGN ADESIVOS
+                                </h4>
+                                <p class="text-sm sm:text-base font-medium opacity-90 mb-4">Desenvolvemos e
+                                    comercializamos artigos decorativos. Compre com segurança, cupons e frete direto
+                                    pela plataforma.</p>
+                                <span
+                                    class="inline-flex items-center gap-2 bg-white text-[#EE4D2D] font-bold px-6 py-3 rounded-full text-sm hover:bg-gray-100 transition shadow-md">
+                                    Visitar Loja <i class="fas fa-external-link-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Outras Redes - Adaptado para alinhar em duplas no celular e centralizar a última -->
+                <div class="max-w-4xl mx-auto flex flex-wrap justify-center gap-4">
+                    <a href="https://www.instagram.com/tocadodesign.baloes" target="_blank"
+                        class="w-[calc(50%-0.5rem)] sm:w-40 bg-white p-5 rounded-2xl border-2 border-brand-lightblue/30 shadow-sm hover:shadow-md hover:border-pink-500 hover:-translate-y-1 transition-all flex flex-col items-center justify-center text-center gap-3 group">
+                        <div
+                            class="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-sm text-brand-blue">Instagram</h5>
+                            <p class="text-[0.65rem] text-brand-dark/60 mt-0.5">@tocadodesign.baloes</p>
+                        </div>
+                    </a>
+                    <a href="https://www.tiktok.com/@tocadodesign" target="_blank"
+                        class="w-[calc(50%-0.5rem)] sm:w-40 bg-white p-5 rounded-2xl border-2 border-brand-lightblue/30 shadow-sm hover:shadow-md hover:border-black hover:-translate-y-1 transition-all flex flex-col items-center justify-center text-center gap-3 group">
+                        <div
+                            class="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fab fa-tiktok"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-sm text-brand-blue">TikTok</h5>
+                            <p class="text-[0.65rem] text-brand-dark/60 mt-0.5">@tocadodesign</p>
+                        </div>
+                    </a>
+                    <a href="https://youtube.com/@tocadodesignadesivosebaloes" target="_blank"
+                        class="w-[calc(50%-0.5rem)] sm:w-40 bg-white p-5 rounded-2xl border-2 border-brand-lightblue/30 shadow-sm hover:shadow-md hover:border-red-600 hover:-translate-y-1 transition-all flex flex-col items-center justify-center text-center gap-3 group">
+                        <div
+                            class="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-sm text-brand-blue">YouTube</h5>
+                            <p class="text-[0.65rem] text-brand-dark/60 mt-0.5">Toca do Design</p>
+                        </div>
+                    </a>
+                    <a href="https://www.facebook.com/tocadodesign.baloes" target="_blank"
+                        class="w-[calc(50%-0.5rem)] sm:w-40 bg-white p-5 rounded-2xl border-2 border-brand-lightblue/30 shadow-sm hover:shadow-md hover:border-blue-600 hover:-translate-y-1 transition-all flex flex-col items-center justify-center text-center gap-3 group">
+                        <div
+                            class="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-sm text-brand-blue">Facebook</h5>
+                            <p class="text-[0.65rem] text-brand-dark/60 mt-0.5">Curitiba PR</p>
+                        </div>
+                    </a>
+                    <a href="https://pin.it/7tjgZOdAj" target="_blank"
+                        class="w-[calc(50%-0.5rem)] sm:w-40 bg-white p-5 rounded-2xl border-2 border-brand-lightblue/30 shadow-sm hover:shadow-md hover:border-red-500 hover:-translate-y-1 transition-all flex flex-col items-center justify-center text-center gap-3 group">
+                        <div
+                            class="w-12 h-12 rounded-full bg-red-500 text-white flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fab fa-pinterest-p"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-sm text-brand-blue">Pinterest</h5>
+                            <p class="text-[0.65rem] text-brand-dark/60 mt-0.5">@tocadodesigncuritiba</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEÇÃO: RODAPÉ -->
+    <footer id="footer-luxo" class="text-white z-10 mt-auto pt-16 pb-8">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="flex flex-col items-center text-center mb-12">
+                <img src="img/logo.png"
+                    onerror="this.src='https://placehold.co/200x80/ffffff/015D8C?text=Toca+do+Design'"
+                    alt="Toca do Design Logo" class="h-14 mb-5 opacity-95">
+                <p class="text-xs text-white/40 uppercase tracking-[0.3em] font-light max-w-xs">Arte em balões ·
+                    Curitiba · Est. 2020</p>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left mb-10">
+                <div>
+                    <p class="text-[0.6rem] text-brand-yellow/60 uppercase tracking-[0.25em] font-bold mb-5">Atendimento
+                    </p>
+                    <div class="space-y-2.5">
+                        <div class="flex items-center justify-center md:justify-start gap-3 text-white/60"><i
+                                class="far fa-clock text-brand-yellow/40 w-4 shrink-0"></i><span
+                                class="text-xs font-light tracking-wide">Seg – Sex &nbsp;·&nbsp; 09h – 12h &nbsp;|&nbsp;
+                                13h – 18h</span></div>
+                        <div class="flex items-center justify-center md:justify-start gap-3 text-white/60"><i
+                                class="far fa-clock text-brand-yellow/40 w-4 shrink-0"></i><span
+                                class="text-xs font-light tracking-wide">Sábado &nbsp;·&nbsp; 09h – 15h</span></div>
+                        <div class="flex items-center justify-center md:justify-start gap-3 text-white/60"><i
+                                class="far fa-clock text-brand-yellow/40 w-4 shrink-0"></i><span
+                                class="text-xs font-light tracking-wide">Domingo &nbsp;·&nbsp; 09h – 11h
+                                (Agendado)</span></div>
+                    </div>
+                </div>
+                <!-- Ajuste no Rodapé para Retirada Limpa -->
+                <div class="flex flex-col items-center">
+                    <p class="text-[0.6rem] text-brand-yellow/60 uppercase tracking-[0.25em] font-bold mb-5">Retirada na
+                        Loja</p>
+                    <div class="space-y-3">
+                        <div class="flex items-start justify-center gap-3 text-white/60"><i
+                                class="fas fa-store text-brand-yellow/40 w-4 shrink-0 mt-0.5"></i>
+                            <div class="text-left">
+                                <p class="text-[0.6rem] text-white/30 uppercase tracking-wider mb-0.5">Endereço</p>
+                                <p class="text-xs font-light">R. Alberto Klemtz, 1579</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p
+                        class="text-[0.6rem] text-brand-yellow/60 uppercase tracking-[0.25em] font-bold mb-5 text-center md:text-right">
+                        Nos Siga</p>
+                    <div class="flex gap-3 justify-center md:justify-end">
+                        <a href="https://www.instagram.com/tocadodesign.baloes" target="_blank" class="social-icon"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@tocadodesign" target="_blank" class="social-icon"><i
+                                class="fab fa-tiktok"></i></a>
+                        <a href="https://www.facebook.com/tocadodesign.baloes" target="_blank" class="social-icon"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/5541998704374" target="_blank" class="social-icon"><i
+                                class="fab fa-whatsapp"></i></a>
+                        <a href="https://youtube.com/@tocadodesignadesivosebaloes" target="_blank"
+                            class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="https://pin.it/7tjgZOdAj" target="_blank" class="social-icon"><i
+                                class="fab fa-pinterest-p"></i></a>
+                    </div>
+                    <div class="mt-5 md:text-right text-center">
+                        <a href="https://wa.me/5541998704374" target="_blank"
+                            class="inline-flex items-center gap-2 text-xs text-white/50 border border-white/10 rounded-full px-4 py-2 hover:border-brand-yellow/50 hover:text-brand-yellow/80 transition">
+                            <i class="fab fa-whatsapp"></i> Falar com especialista
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-[0.6rem] text-white/20 tracking-[0.2em] uppercase">&copy; 2026 Toca do Design. Todos os
+                    direitos reservados.</p>
+                <div class="flex items-center gap-2">
+                    <span class="text-[0.55rem] text-white/20 tracking-widest uppercase">Desenvolvido por</span>
+                    <span
+                        class="text-[0.65rem] font-bold text-brand-yellow/60 tracking-widest border border-brand-yellow/15 px-2 py-0.5 rounded">Core.Build</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SEÇÃO: MENU LATERAL (SIDEBAR NAVIGATION) -->
+    <div id="nav-overlay"
+        class="fixed inset-0 bg-brand-dark/50 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-500">
+    </div>
+    <aside id="nav-sidebar"
+        class="fixed top-0 left-0 w-80 h-full bg-white border-r-4 border-brand-lightblue shadow-2xl z-50 flex flex-col rounded-r-3xl">
+        <div class="p-6 border-b-2 border-brand-lightblue/30 flex justify-between items-center bg-brand-bg">
+            <img src="img/logo.png" onerror="this.src='https://placehold.co/150x50/ffffff/015D8C?text=Menu'"
+                alt="Logo Sidebar" class="h-8 object-contain">
+            <button id="close-nav"
+                class="w-10 h-10 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue hover:scale-105 transition flex items-center justify-center font-bold text-lg">&times;</button>
+        </div>
+        <div class="p-6 flex flex-col gap-4 font-bold text-brand-blue text-sm overflow-y-auto">
+            <a href="#inicio" onclick="toggleNav()"
+                class="flex items-center gap-3 p-3 rounded-2xl hover:bg-brand-bg transition"><i
+                    class="fas fa-home text-brand-yellow bg-brand-blue p-2 rounded-xl"></i> Início</a>
+            <a href="#apresentacao" onclick="toggleNav()"
+                class="flex items-center gap-3 p-3 rounded-2xl hover:bg-brand-bg transition"><i
+                    class="fas fa-star text-brand-yellow bg-brand-blue p-2 rounded-xl"></i> Apresentação</a>
+            <a href="#secao-personalizados" onclick="toggleNav()"
+                class="flex items-center gap-3 p-3 rounded-2xl hover:bg-brand-bg transition"><i
+                    class="fas fa-magic text-brand-yellow bg-brand-blue p-2 rounded-xl"></i> Balões Personalizados</a>
+            <a href="#secao-helio" onclick="toggleNav()"
+                class="flex items-center gap-3 p-3 rounded-2xl hover:bg-brand-bg transition"><i
+                    class="fas fa-wind text-brand-yellow bg-brand-blue p-2 rounded-xl"></i> Gás Hélio</a>
+            <a href="#secao-corporativo" onclick="toggleNav()"
+                class="flex items-center gap-3 p-3 rounded-2xl bg-brand-lightblue/10 border border-brand-lightblue/30 hover:bg-brand-bg transition"><i
+                    class="fas fa-building text-brand-blue bg-brand-yellow p-2 rounded-xl"></i> Balões Corporativos</a>
+            <a href="#secao-romantica" onclick="toggleNav()"
+                class="flex items-center gap-3 p-3 rounded-2xl bg-brand-lightblue/10 border border-brand-lightblue/30 hover:bg-brand-bg transition"><i
+                    class="fas fa-heart text-brand-blue bg-brand-yellow p-2 rounded-xl"></i> Decoração com Balões</a>
+            <a href="#secao-arcos" onclick="toggleNav()"
+                class="flex items-center gap-3 p-3 rounded-2xl bg-brand-lightblue/10 border border-brand-lightblue/30 hover:bg-brand-bg transition"><i
+                    class="fas fa-archway text-brand-blue bg-brand-yellow p-2 rounded-xl"></i> Arcos e Colunas</a>
+            <div class="mt-auto pt-4 border-t-2 border-brand-lightblue/20">
+                <a href="https://wa.me/5541998704374" target="_blank"
+                    class="flex items-center gap-3 p-3 rounded-2xl bg-brand-yellow text-brand-blue border-2 border-brand-blue shadow-md justify-center"><i
+                        class="fab fa-whatsapp text-lg"></i> Falar com Especialista</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- SEÇÃO: BARRA LATERAL DO CARRINHO (CART SIDEBAR) -->
+    <div id="cart-overlay"
+        class="fixed inset-0 bg-brand-dark/50 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-500">
+    </div>
+    <!-- Altura dinâmica h-[100dvh] previne cortes na barra inferior dos navegadores mobile -->
+    <aside id="cart-sidebar"
+        class="fixed top-0 right-0 w-full md:w-[450px] h-[100dvh] bg-white border-l-4 border-brand-lightblue shadow-2xl z-50 flex flex-col rounded-l-3xl">
+        <div class="p-6 border-b-2 border-brand-lightblue/30 flex justify-between items-center bg-brand-bg">
+            <h2 class="text-xl font-bold text-brand-blue flex items-center gap-3">
+                <i class="fas fa-shopping-bag text-brand-yellow bg-brand-blue p-2 rounded-xl"></i> Sua Sacola
+            </h2>
+            <button id="close-cart"
+                class="w-10 h-10 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue hover:scale-105 transition flex items-center justify-center font-bold text-lg">&times;</button>
+        </div>
+        <div id="cart-items" class="flex-grow overflow-y-auto p-6 flex flex-col gap-4"></div>
+        <div
+            class="p-6 bg-brand-bg border-t-2 border-brand-lightblue/30 rounded-bl-3xl shadow-[0_-15px_30px_-15px_rgba(1,93,140,0.15)] shrink-0">
+            <div class="flex justify-center gap-4 mb-4 pb-4 border-b border-brand-lightblue/20">
+                <span
+                    class="text-[0.65rem] text-brand-dark/70 font-bold uppercase tracking-wider flex items-center gap-1.5"><i
+                        class="fas fa-shield-alt text-brand-lightblue"></i> Reserva Segura</span>
+                <span
+                    class="text-[0.65rem] text-brand-dark/70 font-bold uppercase tracking-wider flex items-center gap-1.5"><i
+                        class="fas fa-gem text-brand-lightblue"></i> Atendimento VIP</span>
+            </div>
+            <div class="flex justify-between items-center mb-6">
+                <span class="text-brand-dark font-bold text-sm uppercase tracking-wider">Investimento Total</span>
+                <span id="cart-total" class="text-3xl text-brand-blue font-extrabold tracking-tight">R$ 0,00</span>
+            </div>
+            <button id="checkout-btn"
+                class="w-full bg-brand-yellow hover:bg-amber-400 text-brand-blue font-bold text-sm sm:text-base tracking-widest uppercase py-4 rounded-full transition duration-300 flex items-center justify-center gap-3 shadow-xl border-2 border-white disabled:opacity-40 disabled:cursor-not-allowed hover:scale-[1.02]">
+                Solicitar via WhatsApp <i class="fab fa-whatsapp text-lg"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- SEÇÃO: CARRINHO FLUTUANTE INFERIOR (MOBILE) -->
+    <div id="floating-cart"
+        class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t-2 border-brand-lightblue p-4 z-40 transform translate-y-full transition-transform duration-300 flex justify-between items-center md:hidden shadow-[0_-10px_30px_rgba(1,93,140,0.12)] rounded-t-3xl">
+        <div class="flex flex-col pl-2">
+            <span class="text-[0.65rem] text-brand-dark uppercase font-bold tracking-wider">Total da Reserva</span>
+            <span id="floating-cart-total" class="font-bold text-lg text-brand-blue leading-none">R$ 0,00</span>
+        </div>
+        <button onclick="toggleCart()"
+            class="bg-brand-yellow text-brand-blue border-2 border-brand-blue px-6 py-3.5 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-3 transition shadow-md">
+            Ver Sacola <span id="floating-cart-badge"
+                class="bg-brand-blue text-brand-yellow rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">0</span>
+        </button>
+    </div>
+
+    <!-- SEÇÃO: NOTIFICAÇÃO TOAST COM UX APRIMORADO PARA TEXTOS LONGOS -->
+    <div id="toast"
+        class="toast fixed bottom-24 md:bottom-10 left-4 right-4 sm:left-1/2 sm:right-auto sm:transform sm:-translate-x-1/2 bg-brand-blue text-brand-yellow border-2 border-brand-yellow px-5 py-3 shadow-xl z-50 flex items-center gap-3 rounded-2xl sm:rounded-full font-bold sm:max-w-md">
+        <div class="w-2.5 h-2.5 rounded-full bg-brand-yellow animate-ping flex-shrink-0"></div>
+        <span id="toast-message" class="text-xs sm:text-sm tracking-wide text-white whitespace-normal break-words">Item
+            adicionado!</span>
+    </div>
+
+    <!-- SEÇÃO: MODAL DE DETALHES DE PRODUTO -->
+    <div id="product-modal"
+        class="fixed inset-0 w-screen h-screen bg-brand-dark/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 m-0 opacity-0 transition-opacity duration-300">
+
+        <!-- Fundo escuro clicável para fechar -->
+        <div class="absolute inset-0 w-full h-full" onclick="closeProductModal()"></div>
+
+        <!-- Caixa principal -->
+        <div class="bg-white rounded-3xl w-[92%] max-w-md mx-auto my-auto max-h-[85vh] overflow-y-auto hide-scrollbar p-4 sm:p-6 border-4 border-brand-lightblue shadow-2xl relative transform scale-95 transition-transform duration-300 z-10"
+            id="product-modal-content">
+
+            <!-- Botão de Fechar (X) -->
+            <button onclick="closeProductModal()"
+                class="absolute top-4 right-4 w-9 h-9 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue font-bold text-base flex items-center justify-center hover:scale-105 transition shadow-md z-20">&times;</button>
+
+            <!-- Corpo dinâmico do modal -->
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- ZOOM DE IMAGEM (LIGHTBOX TELA CHEIA) -->
+    <!-- Evento onclick na div pai garante que clique fora feche o zoom -->
+    <div id="image-zoom-overlay"
+        class="fixed inset-0 w-screen h-[100dvh] bg-black/95 backdrop-blur-sm z-[60] hidden flex-col items-center justify-center p-3 sm:p-8 m-0 opacity-0 transition-opacity duration-300"
+        onclick="closeImageZoom(event)">
+
+        <!-- Botão de Fechar (X) -->
+        <button onclick="closeImageZoom(event)"
+            class="absolute top-4 right-4 sm:top-8 sm:right-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border-2 border-white/30 text-white font-bold text-2xl flex items-center justify-center transition shadow-md z-[70] cursor-pointer">&times;</button>
+
+        <!-- Imagem centralizada com event.stopPropagation() para não fechar ao clicar nela mesma -->
+        <img id="zoomed-image" src="" alt="Zoom"
+            class="w-auto max-w-[92vw] max-h-[85vh] mx-auto my-auto object-contain rounded-xl shadow-2xl transform scale-95 transition-transform duration-300 pointer-events-auto cursor-default"
+            onclick="event.stopPropagation()">
+    </div>
+
+    <!-- SEÇÃO: SCRIPTS DA PÁGINA -->
+    <script>
+        // --- DADOS DAS COLEÇÕES (VALORES FIXOS PARA GRID) ---
+        const baloesPersonalizados = [
+            { id: 1, name: 'Bolha 18 com confete', category: 'Personalizados', price: 82.00, img: 'img/personalizado18.jpeg', description: 'Bolha 18" com confete, perfeito para valorizar a decoração e tornar o momento ainda mais especial, mede aprox 72cm.' },
+            { id: 2, name: 'Bolha 13 com confete', category: 'Personalizados', price: 68.00, img: 'img/personalizado13.jpeg', description: 'Bolha 13" com confete, delicado e versátil, perfeito para completar a decoração e criar um detalhe especial em qualquer ocasião, mede aprox 52cm.' },
+            { id: 11, name: 'Bolha 18 base tripla', category: 'Personalizados', price: 130.00, img: 'img/personalizado19p.jpeg', description: 'Bolha 18" base tripla, perfeito para destacar de forma especial e personalizada, medida aprox 1m altura.' },
+            { id: 12, name: 'Bolha 18 base orgânica Especial', category: 'Personalizados', price: 105.00, img: 'img/personalizado18b.jpeg', description: 'Bolha 18" base orgânica especial, perfeito para valorizar a decoração e tornar o momento ainda mais especial, mede aprox 72cm.' },
+            { id: 15, name: 'Bolha 9 encapsulada', category: 'Personalizados', price: 48.00, img: 'img/personalizado9.jpeg', description: 'Bolha 9" encapsulada, uma opção menor delicada, perfeita para completar presentes e decorações com charme e personalidade mede aprox 32cm.' }
+        ];
+
+        const gasHelio = [
+            { id: 3, name: 'Arranjo de Mesa Max Buquê', category: 'Gás Hélio', price: 215.00, img: 'img/heliocol.jpeg', description: 'Uma composição alegre e personalizada, perfeita para presentear e trazer mais cor, leveza e destaque para momentos especiais.' },
+            { id: 16, name: 'Arranjo Max Buquê', category: 'Gás Hélio', price: 852.00, img: 'img/maxbuq.jpeg', description: 'Uma composição imponente e cheia de personalidade, perfeita para celebrar momentos especiais  e criar grande impacto visual em qualquer ocasião .' },
+            { id: 4, name: 'Buquê de Gás Hélio Formatura', category: 'Gás Hélio', price: 252.00, img: 'img/helio20.jpeg', description: 'Uma composição para celebrar essa conquista e tornar a formatura  ainda mais inesquecível, Bolha 20".' },
+            { id: 13, name: 'Arranjo Romântico', category: 'Gás Hélio', price: 230.00, img: 'img/helioc18.jpeg', description: 'Arrranjo Romântico com Balões de Coração 18Uma composição apaixonante e marcante, perfeita para surpreender..' },
+            { id: 14, name: 'Buquê de Balões com Foil', category: 'Gás Hélio', price: 168.00, img: 'img/helio.jpeg', description: 'Composição perfeita para presentear e tornar momentos especiais ainda mais marcantes  .' }
+        ];
+
+        const baloesCorporativos = [
+            { name: 'Arco de Balões Orgânico', category: 'Corporativo', img: 'img/decoraCorp0.jpeg', description: 'Com diferentes tamanhos e formatos, criando um visual moderno, sofisticado e cheio de movimento. Personalizado com as cores e identidade de cada evento, é ideal para entradas, vitrines, eventos corporativos, inaugurações e comemorações.', colorTheme: 'corporate' },
+            { name: 'Decoração Vitrine', category: 'Corporativo', img: 'img/decoraCorp1.jpeg', description: 'Aplicação de balões em vitrines para destacar sua marca e atrair novos clientes com muita elegância.', colorTheme: 'corporate' },
+            { name: 'Arco Tradicional', category: 'Corporativo', img: 'img/decoraCorp2.jpeg', description: 'Arco de balões tradicional para decorar fachadas, vitrines, entradas e espaços comerciais. Uma composição clássica e versátil, ideal para inaugurações, campanhas, ações promocionais e eventos, com cores escolhidas de acordo com a identidade da marca ou preferência do cliente.', colorTheme: 'corporate' },
+            { name: 'Coluna Tradicional', category: 'Corporativo', img: 'img/decoraCorp3.jpeg', description: 'Colunas de balões tradicionais para destacar entradas, vitrines, lojas e eventos. Uma decoração versátil e impactante, ideal para ações promocionais, inaugurações, campanhas e comemorações.', colorTheme: 'corporate' },
+            { name: 'Arco Tradicional', category: 'Corporativo', img: 'img/decoraCorp4.jpeg', description: 'Arco de balões tradicional para transformar entradas, vitrines e espaços de eventos. Uma composição versátil e personalizada, ideal para inaugurações, ações promocionais, campanhas, aniversários e diversas celebrações.', colorTheme: 'corporate' },
+            { name: 'Arco Orgânico + Coluna', category: 'Corporativo', img: 'img/decoraCorp5.jpeg', description: 'Composição que combina arco orgânico e coluna de balões, criando um visual moderno, elegante e personalizado. Ideal para entradas, recepções, eventos corporativos, inaugurações e comemorações, com cores, tamanhos e detalhes definidos de acordo com o projeto e a identidade do evento.', colorTheme: 'corporate' }
+        ];
+
+        const decoracaoRomantica = [
+            { name: 'Decoração Romântica Completa', category: 'Decoração', img: 'img/decoraLov.jpeg', description: 'Crie momentos inesquecíveis com uma decoração romântica personalizada, combinando balões, frases, números e detalhes especiais. Uma composição pensada para surpreender e tornar cada celebração ainda mais especial.' },
+            { name: 'Balões Encapsulados Áereos', category: 'Decoração', img: 'img/decoraCorp1.jpeg', description: 'Balões aéreos para criar um efeito moderno e sofisticado em diferentes ambientes. Podem ser produzidos em diversos modelos, incluindo opções transparentes, com nylon e acabamento em fita de cetim. Feitos para qualquer ocasião, trazendo leveza e elegância à decoração.' },
+            { name: 'Decoração com balões Completa', category: 'Decoração', img: 'img/decoraEv.jpeg', description: 'Decoração completa com balões para restaurantes, eventos corporativos e comemorações especiais. O projeto pode incluir arcos, arranjos de mesa com balões ou composições florais, de acordo com a proposta e necessidade de cada evento, criando um ambiente sofisticado e personalizado.' },
+            { name: 'Decoração Minimalista', category: 'Decoração', img: 'img/decoraMin.jpeg', description: 'Uma decoração leve, elegante e sofisticada, com composição de balões cuidadosamente planejada para valorizar o ambiente sem excessos. Ideal para quem busca beleza, personalidade e um visual moderno e harmonioso.' },
+            { name: 'Decoração Sem Painel', category: 'Decoração', img: 'img/painelBallon.jpeg', description: 'Decoração com balões pensada para valorizar o ambiente sem a necessidade de painel. As composições podem incluir arcos, arranjos, números e outros elementos decorativos, adaptados ao espaço e à proposta de cada evento.' }
+        ];
+
+        const arcosColunasPremium = [
+            { name: 'Arco de Balões Orgânico', category: 'Estruturas', img: 'img/arcoOrg2.jpeg', description: 'Arco de balões orgânico com diferentes tamanhos, texturas e elementos decorativos, criando uma composição elegante e sofisticada. Pode incluir balões transparentes, folhagens e detalhes personalizados, de acordo com a proposta do evento. Ideal para aniversários, comemorações, eventos sociais.' },
+            { name: 'Arco Orgânico', category: 'Estruturas', img: 'img/arcoOrg1.jpeg', description: 'Arco orgânico de balões com diferentes tamanhos, texturas e acabamentos, criando uma composição sofisticada e cheia de personalidade. As cores e elementos decorativos são definidos de acordo com o projeto e a escolha do cliente, tornando cada decoração única e personalizada.' },
+            { name: 'Arco Orgânico em Aro', category: 'Estruturas', img: 'img/arcoOrg0.jpeg', description: 'Arco orgânico montado em aro, com balões de diferentes tamanhos, flores e detalhes decorativos. Uma composição delicada e sofisticada, ideal para aniversários e comemorações especiais, com cores, flores, números e acabamentos definidos de acordo com a escolha do cliente.' },
+            { name: 'Coluna Tradicional', category: 'Estruturas', img: 'img/colun.jpeg', description: 'Colunas de balões tradicionais para destacar entradas, vitrines, lojas e eventos. Uma decoração versátil e impactante, ideal para ações promocionais, inaugurações e campanhas.' },
+            { name: 'Coluna Revelação', category: 'Estruturas', img: 'img/colunRevel.jpeg', description: 'Uma opção divertida e especial para o momento da revelação! A coluna combina balão personalizado e base decorativa. As cores são escolhidas pelo cliente, ideal para chá revelação.' }
+        ];
+
+        let cart = [];
+        const formatMoney = (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        // Grid com centralização automática e medidas perfeitas
+        function generateProductCard(product) {
+            const fallback = `https://placehold.co/600x800/F4F9FD/015D8C?text=${product.name.replace(/ /g, '+')}`;
+            const safeProduct = JSON.stringify(product).replace(/"/g, '&quot;');
+            return `
+                <div class="group flex flex-col justify-between p-3 sm:p-5 rounded-3xl bg-white border-2 border-brand-lightblue/40 hover:border-brand-blue transition duration-300 w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.666rem)] lg:w-[calc(20%-0.8rem)] shadow-sm hover:shadow-xl cursor-pointer relative overflow-hidden flex-shrink-0" onclick="openProductModal(${safeProduct})">
+                    <div>
+                        <div class="relative w-full aspect-[4/5] overflow-hidden rounded-2xl bg-brand-bg border-2 border-brand-lightblue/30 mb-3 shadow-inner">
+                            <img src="${product.img}" onerror="this.src='${fallback}'" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <span class="text-[0.65rem] text-brand-blue font-bold uppercase tracking-widest bg-brand-lightblue/20 px-2 py-0.5 rounded-full inline-block mb-1">${product.category}</span>
+                        <h4 class="font-bold text-xs sm:text-sm text-brand-dark leading-snug mb-3 line-clamp-2 hover:text-brand-blue transition">${product.name}</h4>
+                    </div>
+                    <div class="flex items-center justify-between pt-3 border-t-2 border-brand-lightblue/20 mt-auto">
+                        <span class="text-brand-blue font-extrabold text-sm sm:text-lg tracking-tight">${formatMoney(product.price)}</span>
+                        <button onclick="event.stopPropagation(); addToCart(${product.id})" class="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-brand-yellow hover:scale-110 active:scale-95 transition duration-300 shadow-md">
+                            <i class="fas fa-plus text-xs sm:text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Card Premium (Swipers - Corporativo, Romântica, Arcos)
+        function generatePremiumCard(product, forSwiper = true) {
+            let tagClass = 'bg-brand-lightblue/20 text-brand-blue';
+            let titleClass = 'text-brand-dark group-hover:text-brand-blue';
+            let btnClass = 'bg-brand-yellow hover:bg-amber-400 text-brand-blue border-white shadow-md';
+            let btnIcon = 'fab fa-whatsapp';
+            let wrapClass = forSwiper ? 'swiper-slide' : '';
+
+            if (product.colorTheme === 'corporate') {
+                tagClass = 'bg-slate-100 text-[#0B2545]';
+                titleClass = 'text-brand-dark group-hover:text-[#0B2545]';
+                btnClass = 'bg-[#0B2545] text-white hover:bg-black border-transparent shadow-md';
+            }
+
+            const fallback = `https://placehold.co/600x800/F4F9FD/015D8C?text=${product.name.replace(/ /g, '+')}`;
+            const safeProduct = JSON.stringify(product).replace(/"/g, '&quot;');
+
+            return `
+                <div class="${wrapClass}" onclick='openPremiumModal(${safeProduct})'>
+                    <!-- Usando layout claro e botões independentes assim como o card direto -->
+                    <div class="premium-card-inner group flex flex-col justify-between p-3 sm:p-5 rounded-3xl bg-white border-2 border-brand-lightblue/40 transition duration-300 w-full relative overflow-hidden h-full" style="border-radius: 24px;">
+                        <div>
+                            <div class="relative w-full aspect-[4/5] overflow-hidden rounded-2xl bg-brand-bg border-2 border-brand-lightblue/30 mb-3 shadow-inner">
+                                <img src="${product.img}" onerror="this.src='${fallback}'" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            </div>
+                            <span class="text-[0.65rem] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full inline-block mb-1 ${tagClass}">${product.category}</span>
+                            <h4 class="font-bold text-xs sm:text-sm leading-snug mb-2 line-clamp-2 transition ${titleClass}">${product.name}</h4>
+                            <p class="text-xs text-brand-dark/70 font-medium leading-relaxed mb-4 line-clamp-3">${product.description}</p>
+                        </div>
+                        <div class="pt-3 border-t-2 border-brand-lightblue/20 mt-auto">
+                            <button onclick="event.stopPropagation(); requestQuote('${product.name}')" class="w-full font-bold text-xs tracking-widest uppercase py-2.5 rounded-full transition duration-300 flex items-center justify-center gap-2 border-2 ${btnClass}">
+                                <i class="${btnIcon} text-lg"></i> Orçamento
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProducts() {
+            document.getElementById('grid-personalizados').innerHTML = baloesPersonalizados.map(generateProductCard).join('');
+            document.getElementById('grid-helio').innerHTML = gasHelio.map(generateProductCard).join('');
+
+            // Swiper Corporativo
+            const corporativoInfinito = [...baloesCorporativos, ...baloesCorporativos, ...baloesCorporativos];
+            document.getElementById('carousel-corporativo').innerHTML = corporativoInfinito.map(p => generatePremiumCard(p, true)).join('');
+            new Swiper('#swiper-corporativo', {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                coverflowEffect: { rotate: 25, stretch: 0, depth: 180, modifier: 1.2, slideShadows: false },
+                pagination: { el: '#pag-corporativo', clickable: true },
+                loop: true,
+                loopedSlides: corporativoInfinito.length,
+                breakpoints: { 768: { coverflowEffect: { rotate: 20, depth: 220, modifier: 1.1 } } }
+            });
+
+            // Swiper Romantica
+            const romanticaInfinito = [...decoracaoRomantica, ...decoracaoRomantica, ...decoracaoRomantica];
+            document.getElementById('carousel-romantica').innerHTML = romanticaInfinito.map(p => generatePremiumCard(p, true)).join('');
+            new Swiper('#swiper-romantica', {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                coverflowEffect: { rotate: 25, stretch: 0, depth: 180, modifier: 1.2, slideShadows: false },
+                pagination: { el: '#pag-romantica', clickable: true },
+                loop: true,
+                loopedSlides: romanticaInfinito.length,
+                breakpoints: { 768: { coverflowEffect: { rotate: 20, depth: 220, modifier: 1.1 } } }
+            });
+
+            // Swiper Arcos
+            const arcosInfinito = [...arcosColunasPremium, ...arcosColunasPremium, ...arcosColunasPremium];
+            document.getElementById('carousel-arcos').innerHTML = arcosInfinito.map(p => generatePremiumCard(p, true)).join('');
+            new Swiper('#swiper-arcos', {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                coverflowEffect: { rotate: 25, stretch: 0, depth: 180, modifier: 1.2, slideShadows: false },
+                pagination: { el: '#pag-arcos', clickable: true },
+                loop: true,
+                loopedSlides: arcosInfinito.length,
+                breakpoints: { 768: { coverflowEffect: { rotate: 20, depth: 220, modifier: 1.1 } } }
+            });
+        }
+
+        const productModal = document.getElementById('product-modal');
+        const modalBody = document.getElementById('modal-body');
+        const productModalContent = document.getElementById('product-modal-content');
+
+        // Zoom Overlay Actions
+        window.openImageZoom = function (src, fallback) {
+            const overlay = document.getElementById('image-zoom-overlay');
+            const img = document.getElementById('zoomed-image');
+            img.src = src;
+            img.onerror = () => { img.src = fallback; };
+            overlay.classList.remove('hidden');
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                overlay.classList.add('opacity-100');
+                img.classList.remove('scale-95');
+                img.classList.add('scale-100');
+            }, 10);
+        }
+
+        window.closeImageZoom = function (e) {
+            if (e) e.stopPropagation();
+            const overlay = document.getElementById('image-zoom-overlay');
+            const img = document.getElementById('zoomed-image');
+            overlay.classList.remove('opacity-100');
+            img.classList.remove('scale-100');
+            img.classList.add('scale-95');
+            setTimeout(() => { overlay.classList.add('hidden'); overlay.style.display = 'none'; img.src = ''; }, 300);
+        }
+
+        // Modal para Produtos Diretos (Carrinho)
+        window.openProductModal = function (product) {
+            const fallback = `https://placehold.co/600x800/F4F9FD/015D8C?text=${product.name.replace(/ /g, '+')}`;
+            // Classe object-cover garantida para preencher o espaço total da foto
+            modalBody.innerHTML = `
+                <div class="relative w-full rounded-2xl overflow-hidden mb-4 border-2 border-brand-lightblue/40 shadow-md group cursor-zoom-in" style="aspect-ratio:4/3" onclick="openImageZoom('${product.img}', '${fallback}')">
+                    <img src="${product.img}" onerror="this.src='${fallback}'" alt="${product.name}" class="w-full h-full object-cover bg-brand-bg transition duration-300 group-hover:scale-105">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10 pointer-events-none">
+                        <div class="bg-black/60 text-white rounded-full w-12 h-12 flex items-center justify-center backdrop-blur-sm shadow-lg"><i class="fas fa-search-plus text-xl"></i></div>
+                    </div>
+                </div>
+                <span class="text-[0.65rem] text-brand-blue font-bold uppercase tracking-widest bg-brand-lightblue/20 px-2.5 py-1 rounded-full inline-block mb-1">${product.category}</span>
+                <h3 class="text-lg sm:text-xl font-bold text-brand-blue mb-1">${product.name}</h3>
+                <p class="text-xl font-bold text-brand-dark mb-3">${formatMoney(product.price)}</p>
+                <p class="text-xs sm:text-sm text-brand-dark/80 font-medium leading-relaxed mb-4 bg-brand-bg p-3.5 rounded-2xl border border-brand-lightblue/30">${product.description}</p>
+                <button onclick="addToCart(${product.id}); closeProductModal(); toggleCart();" class="w-full bg-brand-yellow hover:bg-amber-400 text-brand-blue font-bold text-xs sm:text-sm tracking-widest uppercase py-3.5 rounded-full transition duration-300 flex items-center justify-center gap-3 shadow-lg border-2 border-brand-blue hover:scale-[1.02]">
+                    <i class="fas fa-shopping-bag"></i> Adicionar & Ver Sacola
+                </button>
+            `;
+            productModal.classList.remove('hidden');
+            setTimeout(() => { productModal.classList.add('opacity-100'); productModalContent.classList.remove('scale-95'); }, 10);
+        }
+
+        // Modal para Coleções Premium (Orçamento Direto)
+        window.openPremiumModal = function (product) {
+            let accentColor = '#015D8C';
+            let btnClass = 'bg-brand-yellow hover:bg-amber-400 text-brand-blue border-brand-blue';
+            if (product.colorTheme === 'corporate') { accentColor = '#0B2545'; btnClass = 'bg-[#0B2545] hover:bg-black text-white border-[#0B2545]'; }
+
+            const fallback = `https://placehold.co/800x600/F4F9FD/015D8C?text=${product.name.replace(/ /g, '+')}`;
+            // Classe object-cover garantida para preencher o espaço
+            modalBody.innerHTML = `
+                <div class="relative w-full rounded-2xl overflow-hidden mb-4 border-2 shadow-md group cursor-zoom-in" style="aspect-ratio:4/3;border-color:${accentColor}22" onclick="openImageZoom('${product.img}', '${fallback}')">
+                    <img src="${product.img}" onerror="this.src='${fallback}'" alt="${product.name}" class="w-full h-full object-cover bg-brand-bg transition duration-300 group-hover:scale-105">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10 pointer-events-none">
+                        <div class="bg-black/60 text-white rounded-full w-12 h-12 flex items-center justify-center backdrop-blur-sm shadow-lg"><i class="fab fa-whatsapp text-3xl flex-shrink-0"></i></div>
+                    </div>
+                </div>
+                <span class="text-[0.65rem] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full inline-block mb-1" style="background:${accentColor}18;color:${accentColor}">${product.category}</span>
+                <h3 class="text-lg sm:text-xl font-bold mb-1" style="color:${accentColor}">${product.name}</h3>
+                <p class="text-xs sm:text-sm text-brand-dark/80 font-medium leading-relaxed mb-5 bg-brand-bg p-3.5 rounded-2xl border border-brand-lightblue/30">${product.description}</p>
+                <button onclick="requestQuote('${product.name}'); closeProductModal();" class="w-full font-bold text-xs sm:text-sm tracking-widest uppercase py-3.5 px-6 rounded-full transition duration-300 flex items-center gap-3 shadow-lg border-2 ${btnClass} hover:scale-[1.02]">
+                <i class="fab fa-whatsapp text-3xl flex-shrink-0"></i>
+                <span class="text-left leading-tight">Solicitar Orçamento via WhatsApp</span>
+                             </button>
+            `;
+            productModal.classList.remove('hidden');
+            setTimeout(() => { productModal.classList.add('opacity-100'); productModalContent.classList.remove('scale-95'); }, 10);
+        }
+
+        window.closeProductModal = function () {
+            productModal.classList.remove('opacity-100');
+            productModalContent.classList.add('scale-95');
+            setTimeout(() => { productModal.classList.add('hidden'); }, 300);
+        }
+
+        window.requestQuote = function (productName) {
+            let msg = `Olá, Toca do Design! Gostaria de solicitar um orçamento para o projeto de *${productName}*.%0A%0APode me passar mais detalhes?`;
+            window.open(`https://wa.me/5541998704374?text=${msg}`, '_blank');
+        }
+
+        window.openCustomRequestModal = function () {
+            modalBody.innerHTML = `
+                <div class="text-center mb-4">
+                    <div class="w-16 h-16 rounded-full bg-brand-yellow text-brand-blue border-2 border-brand-blue flex items-center justify-center text-2xl mx-auto mb-3 shadow-md"><i class="fas fa-magic"></i></div>
+                    <span class="text-[0.65rem] text-brand-blue font-bold uppercase tracking-widest bg-brand-lightblue/20 px-2.5 py-1 rounded-full inline-block mb-1">Sob Medida</span>
+                    <h3 class="text-lg sm:text-xl font-bold text-brand-blue">Projeto Personalizado</h3>
+                </div>
+                <p class="text-xs sm:text-sm text-brand-dark/80 font-medium leading-relaxed mb-5 bg-brand-bg p-3.5 rounded-2xl border border-brand-lightblue/30">Conte-nos sobre o tema, cores e data do seu evento. Nossa equipe criará um projeto exclusivo com arcos orgânicos e adesivos em vinil.</p>
+                <div class="space-y-3 mb-5">
+                    <div><label class="block text-xs font-bold text-brand-blue uppercase mb-1">Nome do Evento / Tema</label><input type="text" id="custom-theme" placeholder="Ex: Aniversário 15 Anos" class="w-full px-4 py-3 rounded-xl border-2 border-brand-lightblue/50 text-xs font-medium focus:border-brand-blue focus:outline-none bg-brand-bg"></div>
+                    <div><label class="block text-xs font-bold text-brand-blue uppercase mb-1">Data Prevista</label><input type="date" id="custom-date" class="w-full px-4 py-3 rounded-xl border-2 border-brand-lightblue/50 text-xs font-medium focus:border-brand-blue focus:outline-none bg-brand-bg"></div>
+                </div>
+                <button onclick="submitCustomRequest()" class="w-full bg-brand-yellow hover:bg-amber-400 text-brand-blue font-bold text-xs sm:text-sm tracking-widest uppercase py-3.5 rounded-full transition duration-300 flex items-center justify-center gap-3 shadow-lg border-2 border-brand-blue hover:scale-[1.02]"><i class="fab fa-whatsapp text-lg"></i> Enviar Solicitação</button>
+            `;
+            productModal.classList.remove('hidden');
+            setTimeout(() => { productModal.classList.add('opacity-100'); productModalContent.classList.remove('scale-95'); }, 10);
+        }
+
+        window.submitCustomRequest = function () {
+            const theme = document.getElementById('custom-theme').value || 'Não informado';
+            const date = document.getElementById('custom-date').value || 'Não informada';
+            let msg = `Olá, Toca do Design! Gostaria de solicitar um *Projeto Personalizado Sob Medida*:%0A%0A▪ *Tema/Evento:* ${theme}%0A▪ *Data Prevista:* ${date}%0A%0AAguardo orientações!`;
+            window.open(`https://wa.me/5541998704374?text=${msg}`, '_blank');
+            closeProductModal();
+        }
+
+        window.addToCart = function (productId) {
+            const allProducts = [...baloesPersonalizados, ...gasHelio];
+            const product = allProducts.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) existingItem.quantity += 1;
+            else cart.push({ ...product, quantity: 1 });
+
+            updateCartUI();
+            showToast(`"${product.name}" adicionado à sacola!`);
+        };
+
+        window.removeFromCart = function (productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        };
+
+        window.changeQuantity = function (productId, delta) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) removeFromCart(productId);
+                else updateCartUI();
+            }
+        };
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartBadge = document.getElementById('cart-badge');
+            const cartItemsContainer = document.getElementById('cart-items');
+
+            cartBadge.textContent = totalItems;
+            cartBadge.classList.toggle('hidden', totalItems === 0);
+
+            cartItemsContainer.innerHTML = '';
+            let totalValue = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `<div class="text-center text-brand-dark/40 mt-20"><i class="fas fa-wind text-5xl mb-4 text-brand-lightblue animate-bounce"></i><p class="font-medium text-sm">Sua sacola está vazia.</p></div>`;
+                document.getElementById('checkout-btn').disabled = true;
+            } else {
+                document.getElementById('checkout-btn').disabled = false;
+                cart.forEach(item => {
+                    totalValue += item.price * item.quantity;
+                    const fallback = `https://placehold.co/100x100/F4F9FD/015D8C?text=+`;
+                    cartItemsContainer.innerHTML += `
+                        <div class="flex gap-4 items-center border-b-2 border-brand-lightblue/20 pb-4">
+                            <div class="w-16 h-20 bg-white rounded-2xl border-2 border-brand-lightblue/30 flex-shrink-0 overflow-hidden"><img src="${item.img}" onerror="this.src='${fallback}'" class="w-full h-full object-cover"></div>
+                            <div class="flex-grow">
+                                <h5 class="text-xs font-bold text-brand-dark mb-1 line-clamp-2">${item.name}</h5>
+                                <p class="text-brand-blue font-bold text-xs mb-2">${formatMoney(item.price)}</p>
+                                <div class="flex items-center gap-3 bg-brand-lightblue/20 w-max px-3 py-1 rounded-full border border-brand-lightblue">
+                                    <button onclick="changeQuantity(${item.id}, -1)" class="text-brand-blue font-bold text-xs"><i class="fas fa-minus"></i></button>
+                                    <span class="text-xs font-bold w-4 text-center text-brand-blue">${item.quantity}</span>
+                                    <button onclick="changeQuantity(${item.id}, 1)" class="text-brand-blue font-bold text-xs"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <button onclick="removeFromCart(${item.id})" class="text-gray-400 hover:text-red-500 p-2"><i class="fas fa-times"></i></button>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('cart-total').textContent = formatMoney(totalValue);
+
+            const floatingCart = document.getElementById('floating-cart');
+            if (floatingCart) {
+                if (totalItems > 0) {
+                    floatingCart.classList.remove('translate-y-full');
+                    document.getElementById('floating-cart-badge').textContent = totalItems;
+                    document.getElementById('floating-cart-total').textContent = formatMoney(totalValue);
+                } else {
+                    floatingCart.classList.add('translate-y-full');
+                }
+            }
+        }
+
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartOverlay = document.getElementById('cart-overlay');
+            if (cartSidebar.classList.contains('open')) {
+                cartSidebar.classList.remove('open');
+                cartOverlay.classList.remove('opacity-100');
+                setTimeout(() => { cartOverlay.classList.add('hidden'); }, 500);
+            } else {
+                cartOverlay.classList.remove('hidden');
+                setTimeout(() => { cartOverlay.classList.add('opacity-100'); cartSidebar.classList.add('open'); }, 10);
+            }
+        }
+
+        function toggleNav() {
+            const navSidebar = document.getElementById('nav-sidebar');
+            const navOverlay = document.getElementById('nav-overlay');
+            if (navSidebar.classList.contains('open')) {
+                navSidebar.classList.remove('open');
+                navOverlay.classList.remove('opacity-100');
+                setTimeout(() => { navOverlay.classList.add('hidden'); }, 500);
+            } else {
+                navOverlay.classList.remove('hidden');
+                setTimeout(() => { navOverlay.classList.add('opacity-100'); navSidebar.classList.add('open'); }, 10);
+            }
+        }
+
+        document.getElementById('nav-toggle').addEventListener('click', toggleNav);
+        document.getElementById('close-nav').addEventListener('click', toggleNav);
+        document.getElementById('nav-overlay').addEventListener('click', toggleNav);
+        document.getElementById('cart-toggle').addEventListener('click', toggleCart);
+        document.getElementById('close-cart').addEventListener('click', toggleCart);
+        document.getElementById('cart-overlay').addEventListener('click', toggleCart);
+
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            if (cart.length === 0) return;
+            let msg = "Olá, Toca do Design! Gostaria de solicitar uma reserva:%0A%0A";
+            cart.forEach(item => msg += `▪ ${item.quantity}x ${item.name} (${formatMoney(item.price * item.quantity)})%0A`);
+            msg += `%0A*Total:* ${document.getElementById('cart-total').textContent}%0AAguardo retorno!`;
+            window.open(`https://wa.me/5541998704374?text=${msg}`, '_blank');
+        });
+
+        window.scrollReviews = function (direction) {
+            const container = document.getElementById('reviews-carousel');
+            const cardWidth = container.querySelector('div').offsetWidth + 16;
+            container.scrollBy({ left: direction === 'left' ? -cardWidth : cardWidth, behavior: 'smooth' });
+        };
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3500);
+        }
+
+        // --- BACKGROUND ANIMADO (SOMENTE BALÕES CLÁSSICOS) ---
+        const canvas = document.getElementById('balloon-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let balloons = [];
+        let mouseX = window.innerWidth / 2;
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', (e) => { mouseX = e.clientX; });
+        resizeCanvas();
+
+        class BrandBalloon {
+            constructor() { this.reset(); this.y = Math.random() * height; }
+            reset() {
+                this.radius = Math.random() * 22 + 16;
+                this.x = Math.random() * width;
+                this.y = height + this.radius * 3 + Math.random() * 200;
+                this.speed = Math.random() * 0.45 + 0.25;
+                this.swaySpeed = Math.random() * 0.01 + 0.005;
+                this.swayPhase = Math.random() * Math.PI * 2;
+                const rand = Math.random();
+                if (rand < 0.35) this.type = 'yellow';
+                else if (rand < 0.7) this.type = 'lightblue';
+                else this.type = 'blue';
+                this.zDepth = Math.random();
+            }
+            update() {
+                this.y -= this.speed * (this.zDepth + 0.5);
+                this.swayPhase += this.swaySpeed;
+                const centerOffset = (mouseX - width / 2) / (width / 2);
+                this.x += Math.sin(this.swayPhase) * 0.3 + (centerOffset * 0.15);
+                if (this.y < -this.radius * 5) { this.reset(); this.y = height + this.radius * 2; }
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.globalAlpha = (this.zDepth * 0.35 + 0.12) * 0.6;
+                const r = this.radius;
+
+                // BALÃO CLÁSSICO REDONDO com fio
+                ctx.beginPath();
+                ctx.moveTo(0, r);
+                ctx.bezierCurveTo(-r * 0.2, r * 2, r * 0.2, r * 4, 0, r * 7);
+                ctx.strokeStyle = 'rgba(1, 93, 140, 0.15)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                let grad = ctx.createRadialGradient(-r * 0.3, -r * 0.4, r * 0.05, 0, 0, r * 1.1);
+                if (this.type === 'yellow') { grad.addColorStop(0, '#FFFFFF'); grad.addColorStop(0.3, '#FFD52A'); grad.addColorStop(1, '#D9B014'); }
+                else if (this.type === 'lightblue') { grad.addColorStop(0, '#FFFFFF'); grad.addColorStop(0.3, '#64B3DE'); grad.addColorStop(1, '#015D8C'); }
+                else { grad.addColorStop(0, '#64B3DE'); grad.addColorStop(0.3, '#015D8C'); grad.addColorStop(1, '#0B2545'); }
+
+                ctx.beginPath();
+                ctx.ellipse(0, 0, r, r * 1.08, 0, 0, Math.PI * 2);
+                ctx.fillStyle = grad;
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.moveTo(-r * 0.15, r * 1.05);
+                ctx.lineTo(r * 0.15, r * 1.05);
+                ctx.lineTo(0, r * 1.18);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        const balloonCount = Math.floor(window.innerWidth / 45);
+        for (let i = 0; i < balloonCount; i++) balloons.push(new BrandBalloon());
+
+        function animateBalloons() {
+            ctx.clearRect(0, 0, width, height);
+            balloons.sort((a, b) => a.zDepth - b.zDepth);
+            balloons.forEach(b => { b.update(); b.draw(); });
+            requestAnimationFrame(animateBalloons);
+        }
+
+        window.onload = function () {
+            renderProducts();
+            updateCartUI();
+            animateBalloons();
+        };
+
+    </script>
+</body>
+
+</html>
