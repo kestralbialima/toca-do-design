@@ -568,22 +568,25 @@
                 </div>
             </div>
 
-            <div class="relative w-full mx-auto group">
+            <div class="relative w-full max-w-6xl mx-auto px-4 sm:px-12 group">
                 <button onclick="scrollReviews('left')"
-                    class="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue shadow-lg flex items-center justify-center hover:scale-110 hover:bg-amber-400 transition-all z-20"
+                    class="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue shadow-lg flex items-center justify-center hover:scale-110 hover:bg-amber-400 transition-all z-20 cursor-pointer"
                     aria-label="Avaliação anterior">
                     <i class="fas fa-chevron-left ml-[-2px]"></i>
                 </button>
                 <button onclick="scrollReviews('right')"
-                    class="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue shadow-lg flex items-center justify-center hover:scale-110 hover:bg-amber-400 transition-all z-20"
+                    class="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue shadow-lg flex items-center justify-center hover:scale-110 hover:bg-amber-400 transition-all z-20 cursor-pointer"
                     aria-label="Próxima avaliação">
                     <i class="fas fa-chevron-right mr-[-2px]"></i>
                 </button>
 
                 <div id="reviews-carousel"
-                    class="flex gap-4 sm:gap-6 overflow-x-auto carousel-snap hide-scrollbar pb-6 pt-2 px-[calc(50vw-120px)] sm:px-[calc(50vw-190px)]">
-                    <div
-                        class="w-[240px] sm:w-[380px] flex-none bg-brand-bg p-6 rounded-3xl border-2 border-brand-lightblue/30 shadow-sm flex flex-col snap-center">
+                    class="flex gap-4 sm:gap-6 overflow-x-auto carousel-snap hide-scrollbar pb-6 pt-2 px-2 sm:px-4 snap-x">
+
+                    <!-- Card 1 -->
+                    <a href="https://www.google.com/maps/place/Toca+do+Design+Adesivos+e+Bal%C3%B5es+Ltda/@-25.5196292,-49.3049054,13z/data=!4m10!1m2!2m1!1stoca+design!3m6!1s0x94dcf0ff274176bf:0x90430c447ad43291!8m2!3d-25.4692073!4d-49.318735!15sCgt0b2NhIGRlc2lnbloNIgt0b2NhIGRlc2lnbpIBDWJhbGxvb25fc3RvcmWaAURDaTlEUVVsUlFVTnZaRU5vZEhsalJqbHZUMnBPZUdKNlVrVlRXR2hZVkVkMFRVNXVXa1pTU0VKcFkxVTRNMUV3UlJBQuABAPoBBQj6ARBA!16s%2Fg%2F1ptwwmjbr?entry=ttu"
+                        target="_blank"
+                        class="w-[85vw] sm:w-[calc(50%-12px)] flex-none bg-brand-bg p-6 rounded-3xl border-2 border-brand-lightblue/30 shadow-sm flex flex-col snap-center sm:snap-start hover:border-brand-blue transition duration-300 relative group/card">
                         <div class="flex items-center gap-3 mb-4">
                             <div
                                 class="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold text-lg">
@@ -593,14 +596,22 @@
                                 <div class="flex text-brand-yellow text-xs mt-0.5"><i class="fas fa-star"></i><i
                                         class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
                                         class="fas fa-star"></i></div>
-                            </div><i class="fab fa-google text-brand-lightblue ml-auto text-xl"></i>
+                            </div>
+                            <i
+                                class="fab fa-google text-brand-lightblue ml-auto text-xl group-hover/card:scale-110 transition"></i>
                         </div>
                         <p class="text-sm text-brand-dark/80 font-medium leading-relaxed italic">"Atendimento impecável!
                             O arco orgânico para o aniversário da minha filha ficou maravilhoso. Fez toda a diferença na
                             decoração."</p>
-                    </div>
-                    <div
-                        class="w-[240px] sm:w-[380px] flex-none bg-brand-bg p-6 rounded-3xl border-2 border-brand-lightblue/30 shadow-sm flex flex-col snap-center">
+                        <span
+                            class="mt-4 text-[0.65rem] text-brand-blue font-bold uppercase tracking-wider flex items-center gap-1 opacity-70 group-hover/card:opacity-100">Ver
+                            no Google Maps <i class="fas fa-external-link-alt text-[0.55rem]"></i></span>
+                    </a>
+
+                    <!-- Card 2 -->
+                    <a href="https://www.google.com/maps/place/Toca+do+Design+Adesivos+e+Bal%C3%B5es+Ltda/@-25.5196292,-49.3049054,13z/data=!4m10!1m2!2m1!1stoca+design!3m6!1s0x94dcf0ff274176bf:0x90430c447ad43291!8m2!3d-25.4692073!4d-49.318735!15sCgt0b2NhIGRlc2lnbloNIgt0b2NhIGRlc2lnbpIBDWJhbGxvb25fc3RvcmWaAURDaTlEUVVsUlFVTnZaRU5vZEhsalJqbHZUMnBPZUdKNlVrVlRXR2hZVkVkMFRVNXVXa1pTU0VKcFkxVTRNMUV3UlJBQuABAPoBBQj6ARBA!16s%2Fg%2F1ptwwmjbr?entry=ttu"
+                        target="_blank"
+                        class="w-[85vw] sm:w-[calc(50%-12px)] flex-none bg-brand-bg p-6 rounded-3xl border-2 border-brand-lightblue/30 shadow-sm flex flex-col snap-center sm:snap-start hover:border-brand-blue transition duration-300 relative group/card">
                         <div class="flex items-center gap-3 mb-4">
                             <div
                                 class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-lg">
@@ -610,14 +621,22 @@
                                 <div class="flex text-brand-yellow text-xs mt-0.5"><i class="fas fa-star"></i><i
                                         class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
                                         class="fas fa-star"></i></div>
-                            </div><i class="fab fa-google text-brand-lightblue ml-auto text-xl"></i>
+                            </div>
+                            <i
+                                class="fab fa-google text-brand-lightblue ml-auto text-xl group-hover/card:scale-110 transition"></i>
                         </div>
                         <p class="text-sm text-brand-dark/80 font-medium leading-relaxed italic">"Trabalho muito
                             profissional. Encomendei balões com gás hélio e duraram a festa inteira. O adesivo
                             personalizado ficou perfeito no painel."</p>
-                    </div>
-                    <div
-                        class="w-[240px] sm:w-[380px] flex-none bg-brand-bg p-6 rounded-3xl border-2 border-brand-lightblue/30 shadow-sm flex flex-col snap-center">
+                        <span
+                            class="mt-4 text-[0.65rem] text-brand-blue font-bold uppercase tracking-wider flex items-center gap-1 opacity-70 group-hover/card:opacity-100">Ver
+                            no Google Maps <i class="fas fa-external-link-alt text-[0.55rem]"></i></span>
+                    </a>
+
+                    <!-- Card 3 -->
+                    <a href="https://www.google.com/maps/place/Toca+do+Design+Adesivos+e+Bal%C3%B5es+Ltda/@-25.5196292,-49.3049054,13z/data=!4m10!1m2!2m1!1stoca+design!3m6!1s0x94dcf0ff274176bf:0x90430c447ad43291!8m2!3d-25.4692073!4d-49.318735!15sCgt0b2NhIGRlc2lnbloNIgt0b2NhIGRlc2lnbpIBDWJhbGxvb25fc3RvcmWaAURDaTlEUVVsUlFVTnZaRU5vZEhsalJqbHZUMnBPZUdKNlVrVlRXR2hZVkVkMFRVNXVXa1pTU0VKcFkxVTRNMUV3UlJBQuABAPoBBQj6ARBA!16s%2Fg%2F1ptwwmjbr?entry=ttu"
+                        target="_blank"
+                        class="w-[85vw] sm:w-[calc(50%-12px)] flex-none bg-brand-bg p-6 rounded-3xl border-2 border-brand-lightblue/30 shadow-sm flex flex-col snap-center sm:snap-start hover:border-brand-blue transition duration-300 relative group/card">
                         <div class="flex items-center gap-3 mb-4">
                             <div
                                 class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-lg">
@@ -627,12 +646,68 @@
                                 <div class="flex text-brand-yellow text-xs mt-0.5"><i class="fas fa-star"></i><i
                                         class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
                                         class="fas fa-star"></i></div>
-                            </div><i class="fab fa-google text-brand-lightblue ml-auto text-xl"></i>
+                            </div>
+                            <i
+                                class="fab fa-google text-brand-lightblue ml-auto text-xl group-hover/card:scale-110 transition"></i>
                         </div>
                         <p class="text-sm text-brand-dark/80 font-medium leading-relaxed italic">"A melhor equipe!
                             Cuidaram de cada detalhe da nossa vitrine corporativa. Pontuais e extremamente caprichosos.
                             Super indico a Toca do Design."</p>
-                    </div>
+                        <span
+                            class="mt-4 text-[0.65rem] text-brand-blue font-bold uppercase tracking-wider flex items-center gap-1 opacity-70 group-hover/card:opacity-100">Ver
+                            no Google Maps <i class="fas fa-external-link-alt text-[0.55rem]"></i></span>
+                    </a>
+
+                    <!-- Card 4 -->
+                    <a href="https://www.google.com/maps/place/Toca+do+Design+Adesivos+e+Bal%C3%B5es+Ltda/@-25.5196292,-49.3049054,13z/data=!4m10!1m2!2m1!1stoca+design!3m6!1s0x94dcf0ff274176bf:0x90430c447ad43291!8m2!3d-25.4692073!4d-49.318735!15sCgt0b2NhIGRlc2lnbloNIgt0b2NhIGRlc2lnbpIBDWJhbGxvb25fc3RvcmWaAURDaTlEUVVsUlFVTnZaRU5vZEhsalJqbHZUMnBPZUdKNlVrVlRXR2hZVkVkMFRVNXVXa1pTU0VKcFkxVTRNMUV3UlJBQuABAPoBBQj6ARBA!16s%2Fg%2F1ptwwmjbr?entry=ttu"
+                        target="_blank"
+                        class="w-[85vw] sm:w-[calc(50%-12px)] flex-none bg-brand-bg p-6 rounded-3xl border-2 border-brand-lightblue/30 shadow-sm flex flex-col snap-center sm:snap-start hover:border-brand-blue transition duration-300 relative group/card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-lg">
+                                C</div>
+                            <div>
+                                <h4 class="font-bold text-sm text-brand-blue">Camila Souza</h4>
+                                <div class="flex text-brand-yellow text-xs mt-0.5"><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i></div>
+                            </div>
+                            <i
+                                class="fab fa-google text-brand-lightblue ml-auto text-xl group-hover/card:scale-110 transition"></i>
+                        </div>
+                        <p class="text-sm text-brand-dark/80 font-medium leading-relaxed italic">"Simplesmente perfeito!
+                            Os balões personalizados deram um toque único na nossa festa de noivado. Entrega pontual e
+                            material de altíssima qualidade."</p>
+                        <span
+                            class="mt-4 text-[0.65rem] text-brand-blue font-bold uppercase tracking-wider flex items-center gap-1 opacity-70 group-hover/card:opacity-100">Ver
+                            no Google Maps <i class="fas fa-external-link-alt text-[0.55rem]"></i></span>
+                    </a>
+
+                    <!-- Card 5 -->
+                    <a href="https://www.google.com/maps/place/Toca+do+Design+Adesivos+e+Bal%C3%B5es+Ltda/@-25.5196292,-49.3049054,13z/data=!4m10!1m2!2m1!1stoca+design!3m6!1s0x94dcf0ff274176bf:0x90430c447ad43291!8m2!3d-25.4692073!4d-49.318735!15sCgt0b2NhIGRlc2lnbloNIgt0b2NhIGRlc2lnbpIBDWJhbGxvb25fc3RvcmWaAURDaTlEUVVsUlFVTnZaRU5vZEhsalJqbHZUMnBPZUdKNlVrVlRXR2hZVkVkMFRVNXVXa1pTU0VKcFkxVTRNMUV3UlJBQuABAPoBBQj6ARBA!16s%2Fg%2F1ptwwmjbr?entry=ttu"
+                        target="_blank"
+                        class="w-[85vw] sm:w-[calc(50%-12px)] flex-none bg-brand-bg p-6 rounded-3xl border-2 border-brand-lightblue/30 shadow-sm flex flex-col snap-center sm:snap-start hover:border-brand-blue transition duration-300 relative group/card">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-10 h-10 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold text-lg">
+                                R</div>
+                            <div>
+                                <h4 class="font-bold text-sm text-brand-blue">Renata Dias</h4>
+                                <div class="flex text-brand-yellow text-xs mt-0.5"><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i></div>
+                            </div>
+                            <i
+                                class="fab fa-google text-brand-lightblue ml-auto text-xl group-hover/card:scale-110 transition"></i>
+                        </div>
+                        <p class="text-sm text-brand-dark/80 font-medium leading-relaxed italic">"Atendimento excelente
+                            desde o primeiro contato no WhatsApp. Me ajudaram a escolher o buquê ideal e a durabilidade
+                            dos balões com gás hélio me surpreendeu!"</p>
+                        <span
+                            class="mt-4 text-[0.65rem] text-brand-blue font-bold uppercase tracking-wider flex items-center gap-1 opacity-70 group-hover/card:opacity-100">Ver
+                            no Google Maps <i class="fas fa-external-link-alt text-[0.55rem]"></i></span>
+                    </a>
+
                 </div>
             </div>
         </section>
@@ -804,8 +879,8 @@
                     </div>
                     <div class="mt-5 md:text-right text-center">
                         <a href="https://wa.me/5541998704374" target="_blank"
-                            class="inline-flex items-center gap-2 text-xs text-white/50 border border-white/10 rounded-full px-4 py-2 hover:border-brand-yellow/50 hover:text-brand-yellow/80 transition">
-                            <i class="fab fa-whatsapp"></i> Falar com especialista
+                            class="inline-flex items-center gap-2 text-xs font-bold text-brand-yellow bg-brand-yellow/10 border-2 border-brand-yellow/40 rounded-full px-5 py-2.5 shadow-md hover:bg-brand-yellow hover:text-brand-blue hover:border-brand-yellow hover:-translate-y-1 transition-all duration-300">
+                            <i class="fab fa-whatsapp text-base"></i> Falar com especialista
                         </a>
                     </div>
                 </div>
@@ -816,8 +891,8 @@
                     direitos reservados.</p>
                 <div class="flex items-center gap-2">
                     <span class="text-[0.55rem] text-white/20 tracking-widest uppercase">Desenvolvido por</span>
-                    <span
-                        class="text-[0.65rem] font-bold text-brand-yellow/60 tracking-widest border border-brand-yellow/15 px-2 py-0.5 rounded">Core.Build</span>
+                    <a href="https://portifolio-corebuild.netlify.app/" target="_blank"
+                        class="text-[0.65rem] font-bold text-brand-yellow/60 tracking-widest border border-brand-yellow/15 px-2 py-0.5 rounded hover:border-brand-yellow hover:text-brand-yellow transition">Core.Build</a>
                 </div>
             </div>
         </div>
@@ -1170,7 +1245,7 @@
             setTimeout(() => { productModal.classList.add('opacity-100'); productModalContent.classList.remove('scale-95'); }, 10);
         }
 
-// Modal para Produtos Diretos (Carrinho)
+        // Modal para Produtos Diretos (Carrinho)
         window.openProductModal = function (product) {
             const fallback = `https://placehold.co/600x800/F4F9FD/015D8C?text=${product.name.replace(/ /g, '+')}`;
             modalBody.innerHTML = `
