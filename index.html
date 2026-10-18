@@ -930,13 +930,13 @@
         <!-- Fundo escuro clicável para fechar -->
         <div class="absolute inset-0 w-full h-full" onclick="closeProductModal()"></div>
 
-        <!-- Caixa principal -->
-        <div class="bg-white rounded-3xl w-[92%] max-w-md mx-auto my-auto max-h-[85vh] overflow-y-auto hide-scrollbar p-4 sm:p-6 border-4 border-brand-lightblue shadow-2xl relative transform scale-95 transition-transform duration-300 z-10"
+        <!-- Caixa principal: largura inteligente e altura restrita para caber tudo sem scroll -->
+        <div class="bg-white rounded-3xl w-[95%] max-w-lg sm:max-w-4xl mx-auto my-auto max-h-[90vh] overflow-y-auto sm:overflow-hidden p-5 sm:p-8 border-4 border-brand-lightblue shadow-2xl relative transform scale-95 transition-transform duration-300 z-10"
             id="product-modal-content">
 
             <!-- Botão de Fechar (X) -->
             <button onclick="closeProductModal()"
-                class="absolute top-4 right-4 w-9 h-9 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue font-bold text-base flex items-center justify-center hover:scale-105 transition shadow-md z-20">&times;</button>
+                class="absolute top-4 right-4 w-9 h-9 rounded-full bg-brand-yellow border-2 border-brand-blue text-brand-blue font-bold text-base flex items-center justify-center hover:scale-105 transition shadow-md z-30">&times;</button>
 
             <!-- Corpo dinâmico do modal -->
             <div id="modal-body"></div>
@@ -1170,6 +1170,32 @@
             setTimeout(() => { productModal.classList.add('opacity-100'); productModalContent.classList.remove('scale-95'); }, 10);
         }
 
+// Modal para Produtos Diretos (Carrinho)
+        window.openProductModal = function (product) {
+            const fallback = `https://placehold.co/600x800/F4F9FD/015D8C?text=${product.name.replace(/ /g, '+')}`;
+            modalBody.innerHTML = `
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 items-center">
+                    <div class="relative w-full rounded-2xl overflow-hidden border-2 border-brand-lightblue/40 shadow-md group cursor-zoom-in aspect-[4/3] sm:aspect-square" onclick="openImageZoom('${product.img}', '${fallback}')">
+                        <img src="${product.img}" onerror="this.src='${fallback}'" alt="${product.name}" class="w-full h-full object-cover bg-brand-bg transition duration-300 group-hover:scale-105">
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10 pointer-events-none">
+                            <div class="bg-black/60 text-white rounded-full w-12 h-12 flex items-center justify-center backdrop-blur-sm shadow-lg"><i class="fas fa-search-plus text-xl"></i></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center py-1">
+                        <span class="text-[0.6rem] sm:text-[0.65rem] text-brand-blue font-bold uppercase tracking-widest bg-brand-lightblue/20 px-2.5 py-0.5 rounded-full inline-block mb-1.5 w-max">${product.category}</span>
+                        <h3 class="text-base sm:text-2xl font-bold text-brand-blue mb-1 leading-tight">${product.name}</h3>
+                        <p class="text-base sm:text-2xl font-extrabold text-brand-dark mb-2">${formatMoney(product.price)}</p>
+                        <p class="text-xs sm:text-sm text-brand-dark/80 font-medium leading-relaxed mb-4">${product.description}</p>
+                        <button onclick="addToCart(${product.id}); closeProductModal(); toggleCart();" class="w-full bg-brand-yellow hover:bg-amber-400 text-brand-blue font-bold text-xs sm:text-sm tracking-widest uppercase py-3 rounded-full transition duration-300 flex items-center justify-center gap-2 shadow-lg border-2 border-brand-blue hover:scale-[1.02]">
+                            <i class="fas fa-shopping-bag"></i> Adicionar & Ver Sacola
+                        </button>
+                    </div>
+                </div>
+            `;
+            productModal.classList.remove('hidden');
+            setTimeout(() => { productModal.classList.add('opacity-100'); productModalContent.classList.remove('scale-95'); }, 10);
+        }
+
         // Modal para Coleções Premium (Orçamento Direto)
         window.openPremiumModal = function (product) {
             let accentColor = '#015D8C';
@@ -1177,21 +1203,24 @@
             if (product.colorTheme === 'corporate') { accentColor = '#0B2545'; btnClass = 'bg-[#0B2545] hover:bg-black text-white border-[#0B2545]'; }
 
             const fallback = `https://placehold.co/800x600/F4F9FD/015D8C?text=${product.name.replace(/ /g, '+')}`;
-            // Classe object-cover garantida para preencher o espaço
             modalBody.innerHTML = `
-                <div class="relative w-full rounded-2xl overflow-hidden mb-4 border-2 shadow-md group cursor-zoom-in" style="aspect-ratio:4/3;border-color:${accentColor}22" onclick="openImageZoom('${product.img}', '${fallback}')">
-                    <img src="${product.img}" onerror="this.src='${fallback}'" alt="${product.name}" class="w-full h-full object-cover bg-brand-bg transition duration-300 group-hover:scale-105">
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10 pointer-events-none">
-                        <div class="bg-black/60 text-white rounded-full w-12 h-12 flex items-center justify-center backdrop-blur-sm shadow-lg"><i class="fab fa-whatsapp text-3xl flex-shrink-0"></i></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 items-center">
+                    <div class="relative w-full rounded-2xl overflow-hidden border-2 shadow-md group cursor-zoom-in aspect-[4/3] sm:aspect-square" style="border-color:${accentColor}22" onclick="openImageZoom('${product.img}', '${fallback}')">
+                        <img src="${product.img}" onerror="this.src='${fallback}'" alt="${product.name}" class="w-full h-full object-cover bg-brand-bg transition duration-300 group-hover:scale-105">
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10 pointer-events-none">
+                            <div class="bg-black/60 text-white rounded-full w-12 h-12 flex items-center justify-center backdrop-blur-sm shadow-lg"><i class="fas fa-search-plus text-xl"></i></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center py-1">
+                        <span class="text-[0.6rem] sm:text-[0.65rem] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full inline-block mb-1.5 w-max" style="background:${accentColor}18;color:${accentColor}">${product.category}</span>
+                        <h3 class="text-base sm:text-2xl font-bold mb-1.5 leading-tight" style="color:${accentColor}">${product.name}</h3>
+                        <p class="text-xs sm:text-sm text-brand-dark/80 font-medium leading-relaxed mb-4">${product.description}</p>
+                        <button onclick="requestQuote('${product.name}'); closeProductModal();" class="w-full font-bold text-xs sm:text-sm tracking-widest uppercase py-3.5 px-5 rounded-full transition duration-300 flex items-center gap-3 shadow-lg border-2 ${btnClass} hover:scale-[1.02]">
+                            <i class="fab fa-whatsapp text-2xl flex-shrink-0"></i>
+                            <span class="text-left leading-tight">Solicitar Orçamento via WhatsApp</span>
+                        </button>
                     </div>
                 </div>
-                <span class="text-[0.65rem] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full inline-block mb-1" style="background:${accentColor}18;color:${accentColor}">${product.category}</span>
-                <h3 class="text-lg sm:text-xl font-bold mb-1" style="color:${accentColor}">${product.name}</h3>
-                <p class="text-xs sm:text-sm text-brand-dark/80 font-medium leading-relaxed mb-5 bg-brand-bg p-3.5 rounded-2xl border border-brand-lightblue/30">${product.description}</p>
-                <button onclick="requestQuote('${product.name}'); closeProductModal();" class="w-full font-bold text-xs sm:text-sm tracking-widest uppercase py-3.5 px-6 rounded-full transition duration-300 flex items-center gap-3 shadow-lg border-2 ${btnClass} hover:scale-[1.02]">
-                <i class="fab fa-whatsapp text-3xl flex-shrink-0"></i>
-                <span class="text-left leading-tight">Solicitar Orçamento via WhatsApp</span>
-                             </button>
             `;
             productModal.classList.remove('hidden');
             setTimeout(() => { productModal.classList.add('opacity-100'); productModalContent.classList.remove('scale-95'); }, 10);
